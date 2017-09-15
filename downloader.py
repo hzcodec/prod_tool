@@ -68,6 +68,7 @@ class DownLoaderForm(wx.Panel):
         # TODO: rename configListener in trace.py and in main.py
         pub.subscribe(self.configListener, 'TOPIC_CONFIG_LISTENER')
         pub.subscribe(self.serialListener, 'TOPIC_SERIAL_LISTENER')
+        pub.subscribe(self.portScannedName, 'TOPIC_PORTNAME')
 
         logging.basicConfig(format="%(filename)s: %(funcName)s() - %(message)s", level=logging.INFO)
         logging.info('Length of PARAMETER_NAMES: %d', len(PARAMETER_NAMES))
@@ -121,6 +122,9 @@ class DownLoaderForm(wx.Panel):
 
         # resize gauge according to configuration file length
         self.gauge.SetRange(fileLength-1)
+
+    def portScannedName(self, message, arg2=None):
+        print '----------->', message, str(arg2)
 
     def print_parameters(self):
         """

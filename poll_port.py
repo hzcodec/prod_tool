@@ -110,7 +110,8 @@ class PollPortName(threading.Thread):
                 self.lock2 = False
                 print 'Port closed'
 
-            wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", msg=self.sentPortName)
+            #wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", msg=self.sentPortName, arg2='hello')
+            pub.sendMessage("TOPIC_PORTNAME", msg=self.sentPortName, arg2='hello')
             time.sleep(1)
 
     def connect_port(self):
