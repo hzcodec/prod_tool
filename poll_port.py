@@ -86,6 +86,7 @@ class PollPortName(threading.Thread):
                 self.lock = True
                 self.sentPortName = portName
                 print '\nPort is connected to:', portName
+                wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPortName=ser)
 
             # if port does not exists
             elif (os.path.exists(portName) == False and self.lock == True):
@@ -126,13 +127,9 @@ class PollPortName(threading.Thread):
             ser.port = tempList[0]
             ser.open()
 
-            wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPortName=ser)
-
         except:
             print 'No connection'
-            tempList.append&('No device')
-
-            #sys.exit()
+            tempList.append('No device')
 
         if ser.isOpen():
             print("Serial port is open")

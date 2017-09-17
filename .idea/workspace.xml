@@ -8,9 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d985868c-c619-49b8-83e3-9c70821ea3a6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/downloader.py" afterPath="$PROJECT_DIR$/downloader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/poll_port.py" afterPath="$PROJECT_DIR$/poll_port.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,21 +27,13 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1140">
+            <state relative-caret-position="391">
               <caret line="76" column="21" lean-forward="false" selection-start-line="76" selection-start-column="21" selection-end-line="76" selection-end-column="21" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#133#759#0" expanded="false" />
+                <element signature="e#795#1819#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="common.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -51,8 +41,8 @@
       <file leaf-file-name="downloader.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/downloader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="134" column="51" lean-forward="false" selection-start-line="134" selection-start-column="51" selection-end-line="134" selection-end-column="51" />
+            <state relative-caret-position="-474">
+              <caret line="69" column="42" lean-forward="false" selection-start-line="69" selection-start-column="27" selection-end-line="69" selection-end-column="42" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
                 <element signature="e#224#1349#0" expanded="false" />
@@ -68,7 +58,7 @@
         <entry file="file://$PROJECT_DIR$/poll_port.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="229">
-              <caret line="98" column="0" lean-forward="true" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+              <caret line="121" column="19" lean-forward="true" selection-start-line="121" selection-start-column="19" selection-end-line="121" selection-end-column="19" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
                 <element signature="e#205#259#1" expanded="false" />
@@ -90,8 +80,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>HEADLINE</find>
-      <find>RED</find>
       <find>DELAY1</find>
       <find>DELAY2</find>
       <find>TEXT_SERIAL_PORT_BORDER</find>
@@ -117,9 +105,11 @@
       <find>ser</find>
       <find>serialListener</find>
       <find>TOPIC_PORTNAME</find>
-      <find>portScannedName</find>
       <find>serialPortName</find>
       <find>PollPortName</find>
+      <find>tempList</find>
+      <find>connect_port</find>
+      <find>portScannedName</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -130,8 +120,8 @@
       <list>
         <option value="$PROJECT_DIR$/common.py" />
         <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/poll_port.py" />
         <option value="$PROJECT_DIR$/downloader.py" />
+        <option value="$PROJECT_DIR$/poll_port.py" />
       </list>
     </option>
   </component>
@@ -378,6 +368,8 @@
           <caret line="19" column="54" lean-forward="false" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="54" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#133#759#0" expanded="false" />
+            <element signature="e#795#1819#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -423,6 +415,8 @@
           <caret line="19" column="54" lean-forward="false" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="54" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#133#759#0" expanded="false" />
+            <element signature="e#795#1819#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -468,6 +462,8 @@
           <caret line="19" column="54" lean-forward="false" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="54" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#133#759#0" expanded="false" />
+            <element signature="e#795#1819#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -513,6 +509,8 @@
           <caret line="19" column="54" lean-forward="false" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="54" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#133#759#0" expanded="false" />
+            <element signature="e#795#1819#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -558,6 +556,8 @@
           <caret line="19" column="54" lean-forward="false" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="54" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#133#759#0" expanded="false" />
+            <element signature="e#795#1819#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -603,6 +603,8 @@
           <caret line="68" column="39" lean-forward="false" selection-start-line="68" selection-start-column="39" selection-end-line="68" selection-end-column="39" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#133#759#0" expanded="false" />
+            <element signature="e#795#1819#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -635,6 +637,8 @@
           <caret line="68" column="39" lean-forward="false" selection-start-line="68" selection-start-column="39" selection-end-line="68" selection-end-column="39" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#133#759#0" expanded="false" />
+            <element signature="e#795#1819#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -667,6 +671,8 @@
           <caret line="68" column="39" lean-forward="false" selection-start-line="68" selection-start-column="39" selection-end-line="68" selection-end-column="39" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#133#759#0" expanded="false" />
+            <element signature="e#795#1819#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -699,6 +705,8 @@
           <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#133#759#0" expanded="false" />
+            <element signature="e#795#1819#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -743,10 +751,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
+        <state relative-caret-position="391">
           <caret line="76" column="21" lean-forward="false" selection-start-line="76" selection-start-column="21" selection-end-line="76" selection-end-column="21" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#133#759#0" expanded="false" />
+            <element signature="e#795#1819#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -754,7 +764,7 @@
     <entry file="file://$PROJECT_DIR$/poll_port.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="229">
-          <caret line="98" column="0" lean-forward="true" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+          <caret line="121" column="19" lean-forward="true" selection-start-line="121" selection-start-column="19" selection-end-line="121" selection-end-column="19" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <element signature="e#205#259#1" expanded="false" />
@@ -766,8 +776,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/downloader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="134" column="51" lean-forward="false" selection-start-line="134" selection-start-column="51" selection-end-line="134" selection-end-column="51" />
+        <state relative-caret-position="-474">
+          <caret line="69" column="42" lean-forward="false" selection-start-line="69" selection-start-column="27" selection-end-line="69" selection-end-column="42" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <element signature="e#224#1349#0" expanded="false" />

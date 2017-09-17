@@ -287,35 +287,9 @@ class DownLoaderForm(wx.Panel):
         if (self.serialPortName == None):
             print('No port is valid')
             self.ser = None
-            #self.lblConnect.SetForegroundColour(common.RED)
-            #self.lblConnect.SetLabel('Cannot connect')
 
         else:
             print('Yes now we got a port')
-            #self.ser = self.serialPortName
-            #self.lblConnect.SetForegroundColour(common.GREEN)
-            #self.lblConnect.SetLabel("Connected to " + self.comboBox.GetValue())
-
-        # if (self.lengthOfPortNameList != 0):
-        #     logging.info('Downloder connected to: %s', self.comboBox.GetValue())
-        #
-        #     self.connected = True
-        #     self.ser = serial.Serial(port = '/dev/tty'+self.comboBox.GetValue(),
-        #                              baudrate = 9600,
-        #                              parity = serial.PARITY_NONE,
-        #                              stopbits = serial.STOPBITS_ONE,
-        #                              bytesize = serial.EIGHTBITS,
-        #                              timeout = 1)
-        #
-        #     self.lblConnect.SetForegroundColour(common.GREEN)
-        #     self.lblConnect.SetLabel("Connected to " + self.comboBox.GetValue())
-        #
-        #     pub.sendMessage('TOPIC_SERIAL_LISTENER', message=self.ser)
-        #     self.get_remote_controller_version()
-        #
-        # else:
-        #     self.lblConnect.SetForegroundColour(common.RED)
-        #     self.lblConnect.SetLabel('Cannot connect')
 
     def onCombo(self, event):
         logging.info('')
