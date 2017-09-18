@@ -48,6 +48,9 @@ class DownLoaderForm(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
 
+        logging.basicConfig(format="%(filename)s: %(funcName)s() - %(message)s", level=logging.INFO)
+        logging.info('Length of PARAMETER_NAMES: %d', len(PARAMETER_NAMES))
+
         self.ser = None
         self.lengthOfPortNameList = 0
         self.serialPort = None
@@ -69,9 +72,6 @@ class DownLoaderForm(wx.Panel):
         pub.subscribe(self.configListener, 'TOPIC_CONFIG_LISTENER')
         pub.subscribe(self.serialListener, 'TOPIC_SERIAL_LISTENER')
         pub.subscribe(self.portScannedName, 'TOPIC_PORTNAME')
-
-        logging.basicConfig(format="%(filename)s: %(funcName)s() - %(message)s", level=logging.INFO)
-        logging.info('Length of PARAMETER_NAMES: %d', len(PARAMETER_NAMES))
 
         self.parameter_names_length = len(PARAMETER_NAMES)
         self.btnSaveParam.Enable(False)
@@ -127,19 +127,16 @@ class DownLoaderForm(wx.Panel):
         self.gauge.SetRange(fileLength-1)
 
     def portScannedName(self, serialPort):
-        print '----------->', serialPort
         self.serialPort = serialPort
 
         if (serialPort == None):
-            #logging.info('Port is not available')
-            print('No port is valid')
+            logging.info('Port is not available')
             #self.ser = None
             self.lblConnect.SetForegroundColour(common.RED)
             self.lblConnect.SetLabel('No connection')
 
         else:
-            print('Yes now we got a port')
-            #logging.info('Port is available')
+            logging.info('Port is available: %s', serialPort)
             #self.ser = self.serialPort
             self.lblConnect.SetForegroundColour(common.GREEN)
             self.lblConnect.SetLabel("Connected to " + self.comboBox.GetValue())
@@ -187,6 +184,8 @@ class DownLoaderForm(wx.Panel):
             self.lblConnect.SetLabel("Port not Connected")
 
     def setup_serial_sizer(self):
+        logging.info('Setup serial sizer')
+
         txtSerialPort = wx.StaticText(self, wx.ID_ANY, 'Select serial port')
         txtSerPortSizer = wx.BoxSizer(wx.HORIZONTAL)
         txtSerPortSizer.Add(txtSerialPort, 0, wx.TOP, common.TEXT_SERIAL_PORT_BORDER)

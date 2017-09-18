@@ -52,8 +52,8 @@ def get_serial_ports():
 
 class PollPortName(threading.Thread):
     def __init__(self):
-        logging.basicConfig(format="%(filename)s: %(funcName)s() - %(message)s", level=logging.INFO)
-        logging.info('Polling USB port started')
+        #logging.basicConfig(format="%(filename)s: %(funcName)s() - %(message)s", level=logging.INFO)
+        #logging.info('Polling USB port started')
 
         self.portIsConnected = False
         self.portIsDisconnected = False
@@ -133,6 +133,7 @@ class PollPortName(threading.Thread):
 
         if ser.isOpen():
             logging.info('Serial port is open')
+            #print('Serial port is open')
 
 
         return ser, tempList[0]
