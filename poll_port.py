@@ -52,85 +52,79 @@ def get_serial_ports():
 class PollPortName(threading.Thread):
     def __init__(self):
 
-        self.portIsConnected = False
-        self.portIsDisconnected = False
-        self.portIsClosed = False
-        self.lock = False
-        self.lock2 = False
-        self.sentPortName = 'Connect USB cable'
-        self.tmpList = []
+        self.scannedSerialPort = None
+        self.serialPortList = []
 
         th = threading.Thread.__init__(self)
         self.setDaemon(True)
         self.start()    # start the thread
 
+
     def run(self):
-        ser, portName = self.connect_port()
+        self.connect_port()
 
         while True:
 
-            if (portName == 'No device'):
-                self.tmpList = glob.glob('/dev/ttyA*') + glob.glob('/dev/ttyUSB*')
+            # do we have something connected to the serial port?
+            if (self.serialPortList):
+                self.serialPortList = glob.glob('/dev/ttyA*') + glob.glob('/dev/ttyUSB*')
+                wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=self.scannedSerialPort, serialPortName=self.serialPortList[0][8:])
 
-                if not (self.tmpList):
-                    pass
-                else:
-                    portName = self.tmpList[0]
+            else:
+                print 'Still no connection'
+                self.connect_port()
+
 
             # if port exists
-            if (os.path.exists(portName) == True and self.lock == False):
-                self.portIsDisconnected = False
-                self.portIsConnected = True
-                self.lock = True
-                self.sentPortName = portName
-                logging.info('Port is connected to: %s', portName)
-                wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=ser, serialPortName=portName)
-
-            # if port does not exists
-            elif (os.path.exists(portName) == False and self.lock == True):
-                self.portIsDisconnected = True
-                self.portIsConnected = False
-                self.lock = False
-                self.lock2 = True
-                self.sentPortName = 'Connection lost'
-                logging.info('Port is disconnected')
-                wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=None, serialPortName='None')
-
-            if (self.portIsConnected == True and self.portIsClosed == True):
-                logging.info('Reconnect: %s', portName)
-                time.sleep(1)
-                ser, portName = self.connect_port()
-
-            if (ser.isOpen() and self.portIsConnected == True):
-                self.portIsClosed = False
-
-            elif (self.lock2 == True):
-                ser.close()
-                self.portIsClosed = True
-                self.lock2 = False
-                logging.info('Port closed')
+            # if (os.path.exists(portName) == True and self.lock == False):
+            #     self.portIsDisconnected = False
+            #     self.portIsConnected = True
+            #     self.lock = True
+            #     self.sentPortName = portName
+            #     logging.info('Port is connected to: %s', portName)
+            #     wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=ser, serialPortName=portName)
+            #
+            # # if port does not exists
+            # elif (os.path.exists(portName) == False and self.lock == True):
+            #     self.portIsDisconnected = True
+            #     self.portIsConnected = False
+            #     self.lock = False
+            #     self.lock2 = True
+            #     self.sentPortName = 'Connection lost'
+            #     logging.info('Port is disconnected')
+            #     wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=None, serialPortName='None')
+            #
+            # if (self.portIsConnected == True and self.portIsClosed == True):
+            #     logging.info('Reconnect: %s', portName)
+            #     time.sleep(1)
+            #     self.connect_port()
+            #
+            # #if (ser.isOpen() and self.portIsConnected == True):
+            # if (self.portIsConnected == True):
+            #     self.portIsClosed = False
+            #
+            # elif (self.lock2 == True):
+            #     ser.close()
+            #     self.portIsClosed = True
+            #     self.lock2 = False
+            #     logging.info('Port closed')
 
             time.sleep(1)
 
     def connect_port(self):
-        try:
-            tempList = glob.glob('/dev/ttyA*') + glob.glob('/dev/ttyUSB*')
-            logging.info('Read port names: %s', tempList)
 
-            ser = serial.Serial(port = tempList[0],
-                                     baudrate = 9600,
-                                     parity = serial.PARITY_NONE,
-                                     stopbits = serial.STOPBITS_ONE,
-                                     bytesize = serial.EIGHTBITS,
-                                     timeout = 1)
+        self.serialPortList = glob.glob('/dev/ttyA*') + glob.glob('/dev/ttyUSB*')
 
+        # if nothing is connected to serial port then just don't do anything
+        if (self.serialPortList):
+            logging.info('serialPortList=%s', self.serialPortList)
 
-        except:
-            logging.info('No connection')
-            tempList.append('No device')
+            self.scannedSerialPort = serial.Serial(port = self.serialPortList[0],
+                                                   baudrate = 9600,
+                                                   parity = serial.PARITY_NONE,
+                                                   stopbits = serial.STOPBITS_ONE,
+                                                   bytesize = serial.EIGHTBITS,
+                                                   timeout = 1)
 
-        if ser.isOpen():
-            logging.info('Serial port is open')
-
-
-        return ser, tempList[0]
+        else:
+            print 'Nothing connected to serial port'
