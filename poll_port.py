@@ -117,11 +117,6 @@ class PollPortName(threading.Thread):
             tempList = glob.glob('/dev/ttyA*') + glob.glob('/dev/ttyUSB*')
             logging.info('Read port names: %s', tempList)
 
-            #ser = serial.Serial()
-            #ser.braudrate = 9600
-            #ser.port = tempList[0]
-            #ser.open()
-
             ser = serial.Serial(port = tempList[0],
                                      baudrate = 9600,
                                      parity = serial.PARITY_NONE,

@@ -144,6 +144,8 @@ class DownLoaderForm(wx.Panel):
             self.lblConnect.SetForegroundColour(common.GREEN)
             self.lblConnect.SetLabel("Connected to " + serialPortName[8:])
 
+            self.get_remote_controller_version()
+
     def print_parameters(self):
         """
             Update filename in Configuration sizer.
