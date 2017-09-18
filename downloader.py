@@ -43,6 +43,7 @@ def serial_read(cmd, no, serial):
     c = serial.read(no)
     return c
 
+
 class DownLoaderForm(wx.Panel):
 
     def __init__(self, parent):
@@ -81,12 +82,15 @@ class DownLoaderForm(wx.Panel):
 
     def get_remote_controller_version(self):
         time.sleep(common.DELAY_05)
-        self.remoteVersion = serial_read('r_v', 70, self.mySer)
+        logging.info('Read remote controller version from serial port: %s', self.serialPort)
+
+        #self.remoteVersion = serial_read('r_v', 70, self.mySer)
+        self.remoteVersion = serial_read('r_v', 70, self.serialPort)
 
         rVersion = self.remoteVersion.split("r_v")
+        print self.remoteVersion[4:9] # get Unjo string
         self.lblRemoteVersion.SetForegroundColour(common.BLACK)
         self.lblRemoteVersion.SetLabel(rVersion[1])
-        print self.remoteVersion[4:9] # get Unjo string
 
     def get_version(self):
         time.sleep(common.DELAY_05)
@@ -137,9 +141,8 @@ class DownLoaderForm(wx.Panel):
 
         else:
             logging.info('Port is available @ port name: %s', serialPortName)
-            #self.ser = self.serialPort
             self.lblConnect.SetForegroundColour(common.GREEN)
-            self.lblConnect.SetLabel("Connected to " + self.comboBox.GetValue())
+            self.lblConnect.SetLabel("Connected to " + serialPortName[8:])
 
     def print_parameters(self):
         """
@@ -286,15 +289,7 @@ class DownLoaderForm(wx.Panel):
         return statBoxSizer
 
     def onConnect(self, event):
-
-        self.strippedSerialPortNames, self.lengthOfPortNameList = pp.get_serial_ports()
-
-        if (self.serialPort == None):
-            print('No port is valid')
-            self.ser = None
-
-        else:
-            print('Yes now we got a port')
+        self.get_remote_controller_version()
 
     def onCombo(self, event):
         logging.info('')
