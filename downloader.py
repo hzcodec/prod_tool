@@ -50,7 +50,8 @@ class DownLoaderForm(wx.Panel):
 
         self.ser = None
         self.lengthOfPortNameList = 0
-        self.serialPortName = None
+        self.serialPort = None
+        self.strippedSerialPortNames = None
 
         downloadSizer = self.setup_serial_sizer()
         versionSizer = self.setup_version_sizer()
@@ -76,9 +77,10 @@ class DownLoaderForm(wx.Panel):
         self.btnSaveParam.Enable(False)
 
         pp.PollPortName() # start polling port thread
+        time.sleep(common.DELAY_03)
 
     def get_remote_controller_version(self):
-        time.sleep(common.DELAY2)
+        time.sleep(common.DELAY_05)
         self.remoteVersion = serial_read('r_v', 70, self.mySer)
 
         rVersion = self.remoteVersion.split("r_v")
@@ -87,7 +89,7 @@ class DownLoaderForm(wx.Panel):
         print self.remoteVersion[4:9] # get Unjo string
 
     def get_version(self):
-        time.sleep(common.DELAY2)
+        time.sleep(common.DELAY_05)
         self.ascenderVersion = serial_read('v', 60, self.mySer)
         aVersion = self.ascenderVersion.split("v")
 
@@ -101,7 +103,7 @@ class DownLoaderForm(wx.Panel):
 
             print aVersion[1]
 
-            time.sleep(common.DELAY2)
+            time.sleep(common.DELAY_05)
 
         except (IndexError):
             print 'Error. No information read from serial port.'
@@ -124,11 +126,12 @@ class DownLoaderForm(wx.Panel):
         # resize gauge according to configuration file length
         self.gauge.SetRange(fileLength-1)
 
-    def portScannedName(self, serialPortName):
-        print '----------->', serialPortName
-        self.serialPortName = serialPortName
+    def portScannedName(self, serialPort):
+        print '----------->', serialPort
+        self.serialPort = serialPort
 
-        if (serialPortName == None):
+        if (serialPort == None):
+            #logging.info('Port is not available')
             print('No port is valid')
             #self.ser = None
             self.lblConnect.SetForegroundColour(common.RED)
@@ -136,7 +139,8 @@ class DownLoaderForm(wx.Panel):
 
         else:
             print('Yes now we got a port')
-            #self.ser = self.serialPortName
+            #logging.info('Port is available')
+            #self.ser = self.serialPort
             self.lblConnect.SetForegroundColour(common.GREEN)
             self.lblConnect.SetLabel("Connected to " + self.comboBox.GetValue())
 
@@ -172,7 +176,7 @@ class DownLoaderForm(wx.Panel):
 
                 print '[%d] - %s' % (parIndex, local_cmd)
                 serial_cmd(local_cmd, self.mySer)
-                time.sleep(common.DELAY1)
+                time.sleep(common.DELAY_03)
                 self.gauge.SetValue(parIndex)
                 wx.Yield()
 
@@ -284,7 +288,9 @@ class DownLoaderForm(wx.Panel):
 
     def onConnect(self, event):
 
-        if (self.serialPortName == None):
+        self.strippedSerialPortNames, self.lengthOfPortNameList = pp.get_serial_ports()
+
+        if (self.serialPort == None):
             print('No port is valid')
             self.ser = None
 

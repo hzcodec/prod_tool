@@ -105,12 +105,12 @@ Remote:
 
 
 
-
 class mainApp(wx.App):
    def OnInit(self):
        self.frame = MainFrame(None, -1, title=common.HEADLINE, style=wx.SYSTEM_MENU|wx.CAPTION|wx.CLOSE_BOX, size=common.WINDOW_SIZE)
        self.frame.Show()
        return True
+
 
 if __name__ == '__main__':
     app = mainApp()
