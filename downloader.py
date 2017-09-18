@@ -50,8 +50,7 @@ class DownLoaderForm(wx.Panel):
 
         self.ser = None
         self.lengthOfPortNameList = 0
-
-        pp.PollPortName() # start polling port thread
+        self.serialPortName = None
 
         downloadSizer = self.setup_serial_sizer()
         versionSizer = self.setup_version_sizer()
@@ -75,6 +74,8 @@ class DownLoaderForm(wx.Panel):
 
         self.parameter_names_length = len(PARAMETER_NAMES)
         self.btnSaveParam.Enable(False)
+
+        pp.PollPortName() # start polling port thread
 
     def get_remote_controller_version(self):
         time.sleep(common.DELAY2)
@@ -123,8 +124,21 @@ class DownLoaderForm(wx.Panel):
         # resize gauge according to configuration file length
         self.gauge.SetRange(fileLength-1)
 
-    def portScannedName(self, message, arg2=None):
-        print '----------->', message, str(arg2)
+    def portScannedName(self, serialPortName):
+        print '----------->', serialPortName
+        self.serialPortName = serialPortName
+
+        if (serialPortName == None):
+            print('No port is valid')
+            #self.ser = None
+            self.lblConnect.SetForegroundColour(common.RED)
+            self.lblConnect.SetLabel('No connection')
+
+        else:
+            print('Yes now we got a port')
+            #self.ser = self.serialPortName
+            self.lblConnect.SetForegroundColour(common.GREEN)
+            self.lblConnect.SetLabel("Connected to " + self.comboBox.GetValue())
 
     def print_parameters(self):
         """
@@ -270,26 +284,12 @@ class DownLoaderForm(wx.Panel):
 
     def onConnect(self, event):
 
-        if (self.lengthOfPortNameList != 0):
-            logging.info('Downloder connected to: %s', self.comboBox.GetValue())
-
-            self.connected = True
-            self.ser = serial.Serial(port = '/dev/tty'+self.comboBox.GetValue(),
-                                     baudrate = 9600,
-                                     parity = serial.PARITY_NONE,
-                                     stopbits = serial.STOPBITS_ONE,
-                                     bytesize = serial.EIGHTBITS,
-                                     timeout = 1)
-
-            self.lblConnect.SetForegroundColour(common.GREEN)
-            self.lblConnect.SetLabel("Connected to " + self.comboBox.GetValue())
-
-            pub.sendMessage('TOPIC_SERIAL_LISTENER', message=self.ser)
-            self.get_remote_controller_version()
+        if (self.serialPortName == None):
+            print('No port is valid')
+            self.ser = None
 
         else:
-            self.lblConnect.SetForegroundColour(common.RED)
-            self.lblConnect.SetLabel('Cannot connect')
+            print('Yes now we got a port')
 
     def onCombo(self, event):
         logging.info('')

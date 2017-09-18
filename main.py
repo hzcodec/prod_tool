@@ -72,7 +72,37 @@ class MainFrame(wx.Frame):
         pass
 
     def onAbout(self, event):
-        pass
+        licence = """
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THIS SOFTWARE.
+        """
+        description = """Version 1.16.
+
+Requires software/hardware at least versions -
+Ascender:
+    Unjo 500:01 00153 C
+    220:02 00150 A
+    220:02 00111 C
+
+Remote:
+    Unjo 500:01 00155 PB2
+    220:02 00121 D
+    """
+
+        info = wx.AboutDialogInfo()
+        info.SetName("Production Test Tool for ActSafe's ACX/TCX")
+        info.SetDescription(description)
+        info.SetCopyright('(C) 2017 - Unjo AB')
+        info.SetWebSite('http://www.unjo.com')
+        info.SetLicence(licence)
+        wx.AboutBox(info)
+
 
 
 
