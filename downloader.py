@@ -56,6 +56,7 @@ class DownLoaderForm(wx.Panel):
         self.lengthOfPortNameList = 0
         self.serialPort = None
         self.strippedSerialPortNames = None
+        self.lock = False
 
         downloadSizer = self.setup_serial_sizer()
         versionSizer = self.setup_version_sizer()
@@ -80,17 +81,19 @@ class DownLoaderForm(wx.Panel):
         pp.PollPortName() # start polling port thread
         time.sleep(common.DELAY_03)
 
-    def get_remote_controller_version(self):
+    def get_remote_controller_version(self, select):
         time.sleep(common.DELAY_05)
         logging.info('Read remote controller version from serial port: %s', self.serialPort)
 
-        #self.remoteVersion = serial_read('r_v', 70, self.mySer)
-        self.remoteVersion = serial_read('r_v', 70, self.serialPort)
+        if (select == 1):
+            self.remoteVersion = serial_read('r_v', 70, self.serialPort)
 
-        rVersion = self.remoteVersion.split("r_v")
-        print self.remoteVersion[4:9] # get Unjo string
-        self.lblRemoteVersion.SetForegroundColour(common.BLACK)
-        self.lblRemoteVersion.SetLabel(rVersion[1])
+            rVersion = self.remoteVersion.split("r_v")
+            print self.remoteVersion[4:9] # get Unjo string
+            self.lblRemoteVersion.SetForegroundColour(common.BLACK)
+            self.lblRemoteVersion.SetLabel(rVersion[1])
+        else:
+            self.lblRemoteVersion.SetLabel(' ')
 
     def get_version(self):
         time.sleep(common.DELAY_05)
@@ -134,17 +137,23 @@ class DownLoaderForm(wx.Panel):
         self.serialPort = serialPort
 
         if (serialPort == None):
-            logging.info('Port is not available')
-            #self.ser = None
+            logging.info('Port is not available: %s', serialPort)
             self.lblConnect.SetForegroundColour(common.RED)
             self.lblConnect.SetLabel('No connection')
+            self.lock = False
+            self.get_remote_controller_version(0)
 
         else:
             logging.info('Port is available @ port name: %s', serialPortName)
             self.lblConnect.SetForegroundColour(common.GREEN)
-            self.lblConnect.SetLabel("Connected to " + serialPortName[8:])
+            self.lblConnect.SetLabel("Connected to " + serialPortName)
 
-            #self.get_remote_controller_version()
+            # can only to this once otherwise the GUI i fucked up
+            if (self.lock == False):
+                self.get_remote_controller_version(1)
+                self.lock = True
+            else:
+                print 'Urk'
 
     def print_parameters(self):
         """
