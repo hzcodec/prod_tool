@@ -7,11 +7,7 @@
     <bookmark url="file://$PROJECT_DIR$/main.py" line="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d985868c-c619-49b8-83e3-9c70821ea3a6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/downloader.py" afterPath="$PROJECT_DIR$/downloader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/poll_port.py" afterPath="$PROJECT_DIR$/poll_port.py" />
-    </list>
+    <list default="true" id="d985868c-c619-49b8-83e3-9c70821ea3a6" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
