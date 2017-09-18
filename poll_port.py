@@ -45,15 +45,12 @@ def get_serial_ports():
         strippedPortNames.append(tmpPortNames)
 
     lengthOfPortNameList = len(portNames)
-    #print('strippedPortNames:', strippedPortNames)
-    logging.info('strippedPortNames: %s', strippedPortNames)
+    print('Stripped port names: ', strippedPortNames)
     return strippedPortNames, lengthOfPortNameList
 
 
 class PollPortName(threading.Thread):
     def __init__(self):
-        #logging.basicConfig(format="%(filename)s: %(funcName)s() - %(message)s", level=logging.INFO)
-        #logging.info('Polling USB port started')
 
         self.portIsConnected = False
         self.portIsDisconnected = False
@@ -87,7 +84,7 @@ class PollPortName(threading.Thread):
                 self.lock = True
                 self.sentPortName = portName
                 logging.info('Port is connected to: %s', portName)
-                wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=ser)
+                wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=ser, serialPortName=portName)
 
             # if port does not exists
             elif (os.path.exists(portName) == False and self.lock == True):
@@ -97,7 +94,7 @@ class PollPortName(threading.Thread):
                 self.lock2 = True
                 self.sentPortName = 'Connection lost'
                 logging.info('Port is disconnected')
-                wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=None)
+                wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=None, serialPortName='None')
 
             if (self.portIsConnected == True and self.portIsClosed == True):
                 logging.info('Reconnect: %s', portName)
@@ -112,7 +109,6 @@ class PollPortName(threading.Thread):
                 self.portIsClosed = True
                 self.lock2 = False
                 logging.info('Port closed')
-                #print'Port closed'
 
             time.sleep(1)
 
@@ -127,13 +123,11 @@ class PollPortName(threading.Thread):
             ser.open()
 
         except:
-            #print 'No connection'
             logging.info('No connection')
             tempList.append('No device')
 
         if ser.isOpen():
             logging.info('Serial port is open')
-            #print('Serial port is open')
 
 
         return ser, tempList[0]

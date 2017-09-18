@@ -126,7 +126,7 @@ class DownLoaderForm(wx.Panel):
         # resize gauge according to configuration file length
         self.gauge.SetRange(fileLength-1)
 
-    def portScannedName(self, serialPort):
+    def portScannedName(self, serialPort, serialPortName):
         self.serialPort = serialPort
 
         if (serialPort == None):
@@ -136,7 +136,7 @@ class DownLoaderForm(wx.Panel):
             self.lblConnect.SetLabel('No connection')
 
         else:
-            logging.info('Port is available: %s', serialPort)
+            logging.info('Port is available @ port name: %s', serialPortName)
             #self.ser = self.serialPort
             self.lblConnect.SetForegroundColour(common.GREEN)
             self.lblConnect.SetLabel("Connected to " + self.comboBox.GetValue())
