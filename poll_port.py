@@ -67,47 +67,12 @@ class PollPortName(threading.Thread):
 
             # do we have something connected to the serial port?
             if (self.serialPortList):
-                self.serialPortList = glob.glob('/dev/ttyA*') + glob.glob('/dev/ttyUSB*')
                 wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=self.scannedSerialPort, serialPortName=self.serialPortList[0][8:])
-
+                self.serialPortList = glob.glob('/dev/ttyA*') + glob.glob('/dev/ttyUSB*')
             else:
                 print 'Still no connection'
+                wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=None, serialPortName='No port')
                 self.connect_port()
-
-
-            # if port exists
-            # if (os.path.exists(portName) == True and self.lock == False):
-            #     self.portIsDisconnected = False
-            #     self.portIsConnected = True
-            #     self.lock = True
-            #     self.sentPortName = portName
-            #     logging.info('Port is connected to: %s', portName)
-            #     wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=ser, serialPortName=portName)
-            #
-            # # if port does not exists
-            # elif (os.path.exists(portName) == False and self.lock == True):
-            #     self.portIsDisconnected = True
-            #     self.portIsConnected = False
-            #     self.lock = False
-            #     self.lock2 = True
-            #     self.sentPortName = 'Connection lost'
-            #     logging.info('Port is disconnected')
-            #     wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=None, serialPortName='None')
-            #
-            # if (self.portIsConnected == True and self.portIsClosed == True):
-            #     logging.info('Reconnect: %s', portName)
-            #     time.sleep(1)
-            #     self.connect_port()
-            #
-            # #if (ser.isOpen() and self.portIsConnected == True):
-            # if (self.portIsConnected == True):
-            #     self.portIsClosed = False
-            #
-            # elif (self.lock2 == True):
-            #     ser.close()
-            #     self.portIsClosed = True
-            #     self.lock2 = False
-            #     logging.info('Port closed')
 
             time.sleep(1)
 
