@@ -94,3 +94,26 @@ class PollPortName(threading.Thread):
         else:
             #logging.info('No remote controller connected to serial port')
             time.sleep(common.DELAY_1)
+
+
+class PollAlignment(threading.Thread):
+    def __init__(self, serial):
+        th = threading.Thread.__init__(self)
+        self.ser = serial
+        self.setDaemon(True)
+        self.start()  # start the thread
+
+    def run(self):
+        time.sleep(1)
+        line = []
+        # if (self.isAlive()):
+        #    print 'OK'
+
+        while True:
+            for c in self.ser.read(20):
+                line.append(c)
+                # print 'c:', c
+
+                if (c == 'A'):
+                    wx.CallAfter(pub.sendMessage, "TOPIC_ALIGNED", msg="Done")
+                    break

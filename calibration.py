@@ -6,6 +6,7 @@ import time
 from wx.lib.pubsub import setupkwargs
 from wx.lib.pubsub import pub
 import common
+import poll_port as pp
 
 BORDER1 = 10
 
@@ -15,30 +16,6 @@ def serial_cmd(cmd, serial):
         serial.write(cmd + '\r');
     except:
         logging.info('Not connected')
-
-
-class PollAlignment(threading.Thread):
-
-    def __init__(self, serial):
-        th = threading.Thread.__init__(self)
-        self.ser = serial
-        self.setDaemon(True)
-        self.start()    # start the thread
- 
-    def run(self):
-        time.sleep(1)
-        line = []
-        #if (self.isAlive()):
-	    #    print 'OK'
-
-        while True:
-            for c in self.ser.read(20):
-                line.append(c)
-                #print 'c:', c
-
-                if (c == 'A'):
-                    wx.CallAfter(pub.sendMessage, "TOPIC_ALIGNED", msg="Done")
-                    break
 
 
 class CalibForm(wx.Panel):
@@ -170,7 +147,7 @@ class CalibForm(wx.Panel):
 
         # poll answer from Ascender when alignment is done
         try:
-            PollAlignment(self.mySer)
+            pp.PollAlignment(self.mySer)
 
             self.txtAlignment.SetForegroundColour(common.RED)
             self.txtAlignment.SetLabel("Alignment initiated")
