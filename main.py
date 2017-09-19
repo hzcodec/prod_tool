@@ -1,6 +1,7 @@
 import wx
 import trace
 import downloader
+import calibration
 import common
 import prodtest
 
@@ -23,10 +24,12 @@ class MainFrame(wx.Frame):
 
         # Create the tab windows
         self.tabDownLoader = downloader.DownLoaderForm(nb)
+        tabCalib = calibration.CalibForm(nb)
         self.tabProdTest = prodtest.ProdTestForm(nb)
 
         # add the windows to tabs and name them
         nb.AddPage(self.tabDownLoader, "Common")
+        nb.AddPage(tabCalib, "Calibrate")
         nb.AddPage(self.tabProdTest, "Prod Test")
 
         self.setup_menu()
@@ -105,7 +108,7 @@ class MainFrame(wx.Frame):
             passwd = dialog.GetValue()
 
             if (passwd == 'Woodpecker'):
-
+                # TODO: this should probably bee in prodtest.py instead
                 self.tabProdTest.txtCtrl_cl_max.Enable()
                 self.tabProdTest.txtCtrl_cl_min.Enable()
                 self.tabProdTest.txtCtrl_sl_ki.Enable()
@@ -131,7 +134,6 @@ class MainFrame(wx.Frame):
                 self.tabProdTest.txtCtrl_undershoot.Enable()
                 self.tabProdTest.txtCtrl_speed_lim.Enable()
                 self.tabProdTest.txtCtrl_delay_start.Enable()
-
 
     def onAbout(self, event):
         licence = """
@@ -173,7 +175,9 @@ class mainApp(wx.App):
        self.frame.Show()
        return True
 
-
+#=====================================================================================================================================
+#  Main
+#=====================================================================================================================================
 if __name__ == '__main__':
     app = mainApp()
     app.MainLoop()
