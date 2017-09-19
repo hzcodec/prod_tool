@@ -141,8 +141,8 @@ class DownLoaderForm(wx.Panel):
             self.lblConnect.SetForegroundColour(common.RED)
             self.lblConnect.SetLabel('No connection')
             self.lock = False
-            self.get_remote_controller_version(0)
-            self.get_ascender_version(0)
+            self.get_remote_controller_version(common.Port.PORT_NOT_AVAILABLE)
+            self.get_ascender_version(common.Port.PORT_NOT_AVAILABLE)
 
         else:
             #logging.info('Port is available @ port name: %s', serialPortName)
@@ -151,8 +151,8 @@ class DownLoaderForm(wx.Panel):
 
             # can only to this once otherwise the GUI i fucked up
             if (self.lock == False):
-                self.get_remote_controller_version(1)
-                self.get_ascender_version(1)
+                self.get_remote_controller_version(common.Port.PORT_AVAILABLE)
+                self.get_ascender_version(common.Port.PORT_AVAILABLE)
                 self.lock = True
 
     def print_parameters(self):

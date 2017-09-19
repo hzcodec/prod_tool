@@ -17,3 +17,8 @@ BLACK = (0, 0, 0)
 DELAY_05 = 0.5
 DELAY_03 = 0.3
 DELAY_1  = 1.0
+
+
+class Port(object):
+    PORT_NOT_AVAILABLE = 0
+    PORT_AVAILABLE = 1
