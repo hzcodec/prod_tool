@@ -8,6 +8,7 @@ import time
 import os
 import platform
 import logging
+import common
 
 
 def list_serial_ports():
@@ -70,11 +71,10 @@ class PollPortName(threading.Thread):
                 wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=self.scannedSerialPort, serialPortName=self.serialPortList[0][8:])
                 self.serialPortList = glob.glob('/dev/ttyA*') + glob.glob('/dev/ttyUSB*')
             else:
-                print 'Still no connection'
                 wx.CallAfter(pub.sendMessage, "TOPIC_PORTNAME", serialPort=None, serialPortName='No port')
                 self.connect_port()
 
-            time.sleep(1)
+            time.sleep(common.DELAY_1)
 
     def connect_port(self):
 
@@ -92,4 +92,5 @@ class PollPortName(threading.Thread):
                                                    timeout = 1)
 
         else:
-            print 'Nothing connected to serial port'
+            #logging.info('No remote controller connected to serial port')
+            time.sleep(common.DELAY_1)

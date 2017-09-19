@@ -50,7 +50,7 @@ class DownLoaderForm(wx.Panel):
         wx.Panel.__init__(self, parent)
 
         logging.basicConfig(format="%(filename)s: %(funcName)s() - %(message)s", level=logging.INFO)
-        logging.info('Length of PARAMETER_NAMES: %d', len(PARAMETER_NAMES))
+        logging.info('Length of PARAMETER_NAMES list: %d', len(PARAMETER_NAMES))
 
         self.ser = None
         self.lengthOfPortNameList = 0
@@ -83,37 +83,37 @@ class DownLoaderForm(wx.Panel):
 
     def get_remote_controller_version(self, select):
         time.sleep(common.DELAY_05)
-        logging.info('Read remote controller version from serial port: %s', self.serialPort)
+        #logging.info('Read remote controller version from serial port: %s', self.serialPort)
 
         if (select == 1):
             self.remoteVersion = serial_read('r_v', 70, self.serialPort)
 
             rVersion = self.remoteVersion.split("r_v")
-            print self.remoteVersion[4:9] # get Unjo string
+            print self.remoteVersion
             self.lblRemoteVersion.SetForegroundColour(common.BLACK)
             self.lblRemoteVersion.SetLabel(rVersion[1])
         else:
             self.lblRemoteVersion.SetLabel(' ')
 
-    def get_version(self):
+    def get_ascender_version(self, select):
         time.sleep(common.DELAY_05)
-        self.ascenderVersion = serial_read('v', 60, self.mySer)
-        aVersion = self.ascenderVersion.split("v")
 
-        try:
-            if (aVersion[1][2:6] == 'Unjo'):
-                self.lblAscenderVersion.SetForegroundColour(common.BLACK)
-                self.lblAscenderVersion.SetLabel(aVersion[1])
-            else:
-                self.lblAscenderVersion.SetForegroundColour(common.RED)
-                self.lblAscenderVersion.SetLabel('\nIs remote controller connected to Ascender?')
+        if (select == 1):
 
+            self.ascenderVersion = serial_read('v', 60, self.serialPort)
+            aVersion = self.ascenderVersion.split("v")
             print aVersion[1]
 
-            time.sleep(common.DELAY_05)
+            #if (aVersion[1][2:6] == 'Unjo'):
+            self.lblAscenderVersion.SetForegroundColour(common.BLACK)
+            self.lblAscenderVersion.SetLabel(aVersion[1])
 
-        except (IndexError):
-            print 'Error. No information read from serial port.'
+        else:
+                self.lblAscenderVersion.SetForegroundColour(common.RED)
+                self.lblAscenderVersion.SetLabel(' ')
+
+
+        time.sleep(common.DELAY_05)
 
     def serialListener(self, message, fname=None):
         logging.info('')
@@ -137,23 +137,23 @@ class DownLoaderForm(wx.Panel):
         self.serialPort = serialPort
 
         if (serialPort == None):
-            logging.info('Port is not available: %s', serialPort)
+            #logging.info('Port is not available: %s', serialPort)
             self.lblConnect.SetForegroundColour(common.RED)
             self.lblConnect.SetLabel('No connection')
             self.lock = False
             self.get_remote_controller_version(0)
+            self.get_ascender_version(0)
 
         else:
-            logging.info('Port is available @ port name: %s', serialPortName)
+            #logging.info('Port is available @ port name: %s', serialPortName)
             self.lblConnect.SetForegroundColour(common.GREEN)
             self.lblConnect.SetLabel("Connected to " + serialPortName)
 
             # can only to this once otherwise the GUI i fucked up
             if (self.lock == False):
                 self.get_remote_controller_version(1)
+                self.get_ascender_version(1)
                 self.lock = True
-            else:
-                print 'Urk'
 
     def print_parameters(self):
         """
@@ -198,8 +198,6 @@ class DownLoaderForm(wx.Panel):
             self.lblConnect.SetLabel("Port not Connected")
 
     def setup_serial_sizer(self):
-        logging.info('Setup serial sizer')
-
         txtSerialPort = wx.StaticText(self, wx.ID_ANY, 'Select serial port')
         txtSerPortSizer = wx.BoxSizer(wx.HORIZONTAL)
         txtSerPortSizer.Add(txtSerialPort, 0, wx.TOP, common.TEXT_SERIAL_PORT_BORDER)
