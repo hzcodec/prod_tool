@@ -4,6 +4,7 @@ import downloader
 import calibration
 import common
 import prodtest
+import trace
 
 
 def print_const():
@@ -26,11 +27,13 @@ class MainFrame(wx.Frame):
         self.tabDownLoader = downloader.DownLoaderForm(nb)
         tabCalib = calibration.CalibForm(nb)
         self.tabProdTest = prodtest.ProdTestForm(nb)
+        tabTrace = trace.TraceTestFrom(nb)
 
         # add the windows to tabs and name them
         nb.AddPage(self.tabDownLoader, "Common")
         nb.AddPage(tabCalib, "Calibrate")
         nb.AddPage(self.tabProdTest, "Prod Test")
+        nb.AddPage(tabTrace, "Performance Test")
 
         self.setup_menu()
 
