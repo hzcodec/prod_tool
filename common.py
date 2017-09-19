@@ -8,10 +8,11 @@ MSG_QUIT = 'Quit application?\n\nCheck that Ascender motor has stopped!\n'
 
 # misc colors
 RED   = (255, 0 , 0)
-GREEN = (11, 102 , 66)
 GREY  = (180, 180, 180)
 BLACK = (0, 0, 0)
 WHITE   = (255, 255, 255)
+GREEN = (36, 119, 62)
+
 
 
 # time delays in seconds

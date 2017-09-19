@@ -5,11 +5,7 @@ import threading
 import time
 from wx.lib.pubsub import setupkwargs
 from wx.lib.pubsub import pub
-
-RED   = (255, 19, 32)
-GREEN = (36, 119, 62)
-GREY  = (180, 180, 180)
-BLACK = (0, 0, 0)
+import common
 
 BORDER1 = 10
 
@@ -84,8 +80,8 @@ class CalibForm(wx.Panel):
 
     def setup_alignment_sizer(self):
         statBoxSerial = wx.StaticBox(self, wx.ID_ANY, '  Alignment')
-        statBoxSerial.SetBackgroundColour(GREY)
-        statBoxSerial.SetForegroundColour(BLACK)
+        statBoxSerial.SetBackgroundColour(common.GREY)
+        statBoxSerial.SetForegroundColour(common.BLACK)
         statBoxSizer = wx.StaticBoxSizer(statBoxSerial, wx.HORIZONTAL)
 
         self.txtAlignment = wx.StaticText(self, wx.ID_ANY, 'Alignment not performed')
@@ -102,8 +98,8 @@ class CalibForm(wx.Panel):
 
     def setup_calibration_sizer(self):
         statBoxSerial = wx.StaticBox(self, wx.ID_ANY, '  Calibration')
-        statBoxSerial.SetBackgroundColour(GREY)
-        statBoxSerial.SetForegroundColour(BLACK)
+        statBoxSerial.SetBackgroundColour(common.GREY)
+        statBoxSerial.SetForegroundColour(common.BLACK)
         statBoxSizer = wx.StaticBoxSizer(statBoxSerial, wx.VERTICAL)
 
         self.txtThrottleMaxUp = wx.StaticText(self, wx.ID_ANY, 'Turn throttle handle max up')
@@ -146,8 +142,8 @@ class CalibForm(wx.Panel):
 
     def setup_save_param_sizer(self):
         statBoxSerial = wx.StaticBox(self, wx.ID_ANY, '  Save Parameter')
-        statBoxSerial.SetBackgroundColour(GREY)
-        statBoxSerial.SetForegroundColour(BLACK)
+        statBoxSerial.SetBackgroundColour(common.GREY)
+        statBoxSerial.SetForegroundColour(common.BLACK)
         statBoxSizer = wx.StaticBoxSizer(statBoxSerial, wx.HORIZONTAL)
         txtNull = wx.StaticText(self, wx.ID_ANY, ' ')
 
@@ -176,14 +172,14 @@ class CalibForm(wx.Panel):
         try:
             PollAlignment(self.mySer)
 
-            self.txtAlignment.SetForegroundColour(RED)
+            self.txtAlignment.SetForegroundColour(common.RED)
             self.txtAlignment.SetLabel("Alignment initiated")
             self.btnSaveParam.Enable(True)
             self.operation = 'alignment'
             serial_cmd('align', self.mySer)
 
         except:
-            self.txtAlignment.SetForegroundColour(RED)
+            self.txtAlignment.SetForegroundColour(common.RED)
             self.txtAlignment.SetLabel("Serial port not connected. Connect port under Common tab.")
 
     def onCalibUp(self, event):
@@ -191,7 +187,7 @@ class CalibForm(wx.Panel):
         self.btnSaveParam.Enable(False)
         self.btnCalibRight.Enable(False)
         self.btnCalibLeft.Enable(True)
-        self.txtThrottleMaxUp.SetForegroundColour(GREEN)
+        self.txtThrottleMaxUp.SetForegroundColour(common.GREEN)
         self.txtThrottleMaxUp.SetLabel("Up Calibration finished")
         serial_cmd('throttle cal 1', self.mySer)
 
@@ -206,9 +202,9 @@ class CalibForm(wx.Panel):
     def onCalibNeutral(self, event):
         logging.info('Calibration Neutral done')
         self.btnCalibNeutral.Enable(False)
-        self.txtThrottleNeutral.SetForegroundColour(GREEN)
+        self.txtThrottleNeutral.SetForegroundColour(common.GREEN)
         self.txtThrottleNeutral.SetLabel("Down Calibration finished")
-        self.txtAlertUser.SetForegroundColour(RED)
+        self.txtAlertUser.SetForegroundColour(common.RED)
         self.txtAlertUser.SetLabel("Remember to save calibration result")
         self.operation = 'calibration'
         serial_cmd('throttle cal 0', self.mySer)
@@ -236,7 +232,7 @@ class CalibForm(wx.Panel):
     def aligned_finished(self, msg):
         logging.info('')
         self.btnAlign.Enable(True)
-        self.txtAlignment.SetForegroundColour(GREEN)
+        self.txtAlignment.SetForegroundColour(common.GREEN)
         self.txtAlignment.SetLabel("Alignment finished.")
         self.btnCalibRight.Enable(True)
         self.btnCalibRestart.Enable(True)
