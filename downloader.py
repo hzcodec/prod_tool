@@ -110,8 +110,7 @@ class DownLoaderForm(wx.Panel):
 
         else:
                 self.lblAscenderVersion.SetForegroundColour(common.RED)
-                self.lblAscenderVersion.SetLabel(' ')
-
+                self.lblAscenderVersion.SetLabel(' ')S
 
         time.sleep(common.DELAY_05)
 
