@@ -27,7 +27,7 @@ class MainFrame(wx.Frame):
         self.tabDownLoader = downloader.DownLoaderForm(nb)
         tabCalib = calibration.CalibForm(nb)
         self.tabProdTest = prodtest.ProdTestForm(nb)
-        tabTrace = trace.TraceTestFrom(nb)
+        tabTrace = trace.TraceTestForm(nb)
 
         # add the windows to tabs and name them
         nb.AddPage(self.tabDownLoader, "Common")

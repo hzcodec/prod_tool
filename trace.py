@@ -10,14 +10,10 @@ from wx.lib.pubsub import setupkwargs
 import select
 import sys
 import os
-
-RED   = (255, 19, 32)
+import common
 
 BORDER1 = 10
 BORDER2 = 5
-
-GREY  = (180, 180, 180)
-BLACK = (0, 0, 0)
 
 TRACE_DATA_START = 4
 SPEED_START = 13
@@ -295,8 +291,8 @@ class TraceTestForm(wx.Panel):
 
     def setup_trace_sizer(self):
         statBoxSerial = wx.StaticBox(self, wx.ID_ANY, '  Trace test')
-        statBoxSerial.SetBackgroundColour(GREY)
-        statBoxSerial.SetForegroundColour(BLACK)
+        statBoxSerial.SetBackgroundColour(common.GREY)
+        statBoxSerial.SetForegroundColour(common.BLACK)
         statBoxSizer = wx.StaticBoxSizer(statBoxSerial, wx.HORIZONTAL)
 
         txtNull = wx.StaticText(self, wx.ID_ANY, ' ')
@@ -339,8 +335,8 @@ class TraceTestForm(wx.Panel):
 
     def setup_status_sizer(self):
         statBoxSerial = wx.StaticBox(self, wx.ID_ANY, '  Status')
-        statBoxSerial.SetBackgroundColour(GREY)
-        statBoxSerial.SetForegroundColour(BLACK)
+        statBoxSerial.SetBackgroundColour(common.GREY)
+        statBoxSerial.SetForegroundColour(common.BLACK)
         statBoxSizer = wx.StaticBoxSizer(statBoxSerial, wx.HORIZONTAL)
 
         self.vBatHeadline = wx.StaticText(self, -1, "Vbat:")
@@ -402,8 +398,8 @@ class TraceTestForm(wx.Panel):
 
     def setup_plot_sizer(self):
         statBoxSerial = wx.StaticBox(self, wx.ID_ANY, '  Plot result')
-        statBoxSerial.SetBackgroundColour(GREY)
-        statBoxSerial.SetForegroundColour(BLACK)
+        statBoxSerial.SetBackgroundColour(common.GREY)
+        statBoxSerial.SetForegroundColour(common.BLACK)
         statBoxSizer = wx.StaticBoxSizer(statBoxSerial, wx.HORIZONTAL)
 
         self.figure = Figure(figsize=(5.0, 4.0), dpi=100)
@@ -453,15 +449,15 @@ class TraceTestForm(wx.Panel):
             currentDriveTempB = float(rv[71:76])
 
             if (currentMotorTemp > maxMotorTemp):
-                self.tempOk.SetForegroundColour(RED)
+                self.tempOk.SetForegroundColour(common.RED)
                 self.tempOk.SetLabel("Motor temp to high")
 
             if (currentDriveTempA > maxDriveTemp):
-                self.driveTempAOk.SetForegroundColour(RED)
+                self.driveTempAOk.SetForegroundColour(common.RED)
                 self.driveTempAOk.SetLabel("Drive A temp to high")
 
             if (currentDriveTempB > maxDriveTemp):
-                self.driveTempBOk.SetForegroundColour(RED)
+                self.driveTempBOk.SetForegroundColour(common.RED)
                 self.driveTempBOk.SetLabel("Drive B temp to high")
 
         except AttributeError:
