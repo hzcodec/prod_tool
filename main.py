@@ -2,6 +2,7 @@ import wx
 import trace
 import downloader
 import common
+import prodtest
 
 
 class MainFrame(wx.Frame):
@@ -18,6 +19,7 @@ class MainFrame(wx.Frame):
 
         # Create the tab windows
         self.tabDownLoader = downloader.DownLoaderForm(nb)
+        self.tabProdTest = prodtest.ProdTestForm(nb)
 
         # add the windows to tabs and name them
         nb.AddPage(self.tabDownLoader, "Common")
@@ -63,10 +65,12 @@ class MainFrame(wx.Frame):
         pass
 
     def onLock(self, event):
-        pass
+        self.tabProdTest.lock_text_controls()
 
     def onQuit(self, event):
         rv = self.exitDialog.ShowModal()
+        if rv == wx.ID_YES:
+            self.Close(True)
 
     def onUnLock(self, event):
         pass
