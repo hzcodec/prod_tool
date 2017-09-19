@@ -23,6 +23,7 @@ class MainFrame(wx.Frame):
 
         # add the windows to tabs and name them
         nb.AddPage(self.tabDownLoader, "Common")
+        nb.AddPage(self.tabProdTest, "Prod Test")
 
         self.setup_menu()
 
