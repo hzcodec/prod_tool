@@ -27,6 +27,7 @@ def serial_read(cmd, no, serial):
     c = serial.read(no)
     return c
 
+
 class ProdTestForm(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
@@ -88,13 +89,10 @@ class ProdTestForm(wx.Panel):
         self.configParameters = 0
 
     def serialListener(self, message, fname=None):
-
-        #print 'msg:', message
-	    self.mySer = message
+        self.mySer = message
 
     def configListener(self, message, fname=None):
         self.configParameters = message
-        #print self.configParameters
         self.extract_parameters(self.configParameters)
 
     def extract_parameters(self, par):
