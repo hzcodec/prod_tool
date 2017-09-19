@@ -11,12 +11,17 @@ RED   = (255, 0 , 0)
 GREEN = (11, 102 , 66)
 GREY  = (180, 180, 180)
 BLACK = (0, 0, 0)
+WHITE   = (255, 255, 255)
 
 
 # time delays in seconds
 DELAY_05 = 0.5
 DELAY_03 = 0.3
 DELAY_1  = 1.0
+
+
+# max/min motor speed
+MOTOR_SPEED = 80
 
 
 class Port(object):

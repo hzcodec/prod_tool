@@ -3,18 +3,11 @@ import time
 import logging
 from wx.lib.pubsub import pub
 from wx.lib.pubsub import setupkwargs
+import common
 
 BORDER1 = 5
 TEXT_SERIAL_PORT_BORDER = 10
 WAIT_DELAY = 1
-
-# max/min motor speed
-MOTOR_SPEED = 80
-
-RED   = (255, 0, 0)
-WHITE   = (255, 255, 255)
-GREY  = (180, 180, 180)
-BLACK = (0, 0, 0)
 
 
 def serial_cmd(cmd, serial):
@@ -106,87 +99,85 @@ class ProdTestForm(wx.Panel):
         self.extract_parameters(self.configParameters)
 
     def extract_parameters(self, par):
-        pass
-    #print par
-    #     #logging.info('length: %s', len(par))
-    #     for i in range(0, len(par)):
-    #     stripPar = par[i].strip('\n')
-    #     splitPar = stripPar.split(',')
-    #     #print splitPar[0], splitPar[1]
-    #
-	 #    # update text control fields in --Set parameters-- box
-	 #    if (splitPar[0] == 'motor.cl.max'):
-    #         self.txtCtrl_cl_max.SetValue(splitPar[1])
-    #         self.oldClMax = float(splitPar[1])
-    #     if (splitPar[0] == 'motor.cl.min'):
-    #         self.txtCtrl_cl_min.SetValue(splitPar[1])
-    #         self.oldClMin = float(splitPar[1])
-    #     if (splitPar[0] == 'motor.sl.ki'):
-    #         self.txtCtrl_sl_ki.SetValue(splitPar[1])
-    #         self.oldSlKi = float(splitPar[1])
-    #     if (splitPar[0] == 'motor.sl.max'):
-    #         self.txtCtrl_sl_max.SetValue(splitPar[1])
-    #         self.oldSlMax = float(splitPar[1])
-    #     if (splitPar[0] == 'motor.sl.min'):
-    #         self.txtCtrl_sl_min.SetValue(splitPar[1])
-    #         self.oldSlMin = float(splitPar[1])
-    #     if (splitPar[0] == 'throttle.has_switch'):
-    #         self.txtCtrl_has_switch.SetValue(splitPar[1])
-    #         self.oldHasSwitch = float(splitPar[1])
-    #     if (splitPar[0] == 'power_margin'):
-    #         self.txtCtrl_power_margin.SetValue(splitPar[1])
-    #         self.oldPowerMargin = float(splitPar[1])
-    #     if (splitPar[0] == 'power_factor'):
-    #         self.txtCtrl_power_factor.SetValue(splitPar[1])
-    #         self.oldPowerFactor = float(splitPar[1])
-    #     if (splitPar[0] == 'led.brightness_lo'):
-    #         self.txtCtrl_brightness_lo.SetValue(splitPar[1])
-    #         self.oldBrightnessLo = float(splitPar[1])
-    #     if (splitPar[0] == 'brake_temp_ok'):
-    #         self.txtCtrl_brake_temp_ok.SetValue(splitPar[1])
-    #         self.oldBrakeTempOk = float(splitPar[1])
-    #     if (splitPar[0] == 'brake_temp_hi'):
-    #         self.txtCtrl_brake_temp_hi.SetValue(splitPar[1])
-    #         self.oldBrakeTempHi = float(splitPar[1])
-    #     if (splitPar[0] == 'brake_max_id'):
-    #         self.txtCtrl_brake_max_id.SetValue(splitPar[1])
-    #         self.oldBrakeMaxId = float(splitPar[1])
-    #     if (splitPar[0] == 'brake_test.pos_ratio'):
-    #         self.txtCtrl_brake_pos_ratio.SetValue(splitPar[1])
-    #         self.oldBrakePosRatio = float(splitPar[1])
-    #     if (splitPar[0] == 'trajec.acc'):
-    #         self.txtCtrl_trajec_acc.SetValue(splitPar[1])
-    #         self.oldTrajecAcc = float(splitPar[1])
-    #     if (splitPar[0] == 'trajec.ret'):
-    #         self.txtCtrl_trajec_ret.SetValue(splitPar[1])
-    #         self.oldTrajecRet = float(splitPar[1])
-    #     if (splitPar[0] == 'dominant_throttle_on'):
-    #         self.txtCtrl_dominant_throttle_on.SetValue(splitPar[1])
-    #         self.oldDominantThrottle = float(splitPar[1])
-    #     if (splitPar[0] == 'max_motor_temp'):
-    #         self.txtCtrl_max_motor_temp.SetValue(splitPar[1])
-    #         self.oldMaxMotorTemp = float(splitPar[1])
-    #     if (splitPar[0] == 'num_motor_ch'):
-    #         self.txtCtrl_num_motor_ch.SetValue(splitPar[1])
-    #         self.oldNumMotorCh = float(splitPar[1])
-    #     if (splitPar[0] == 'idle_timeout'):
-    #         self.txtCtrl_idle_timeout.SetValue(splitPar[1])
-    #         self.oldIdleTimeout = float(splitPar[1])
-    #     if (splitPar[0] == 'rope_stuck_on'):
-    #         self.txtCtrl_rope_stuck_on.SetValue(splitPar[1])
-    #         self.oldRopeStuckOn = float(splitPar[1])
-    #     if (splitPar[0] == 'iq_alpha'):
-    #         self.txtCtrl_iq_alpha.SetValue(splitPar[1])
-    #         self.oldIqAlpha = float(splitPar[1])
-    #     if (splitPar[0] == 'speed_alpha'):
-    #         self.txtCtrl_speed_alpha.SetValue(splitPar[1])
-    #         self.oldSpeedAlpha = float(splitPar[1])
-    #     if (splitPar[0] == 'undershoot'):
-    #         self.txtCtrl_undershoot.SetValue(splitPar[1])
-    #         self.oldUndershoot = float(splitPar[1])
-    #     if (splitPar[0] == 'delay_start'):
-    #         self.txtCtrl_delay_start.SetValue(splitPar[1])
-    #         self.oldDelayStart = float(splitPar[1])
+        #logging.info('length: %s', len(par))
+        for i in range(0, len(par)):
+            stripPar = par[i].strip('\n')
+            splitPar = stripPar.split(',')
+            #print splitPar[0], splitPar[1]
+
+            # update text control fields in --Set parameters-- box
+            if (splitPar[0] == 'motor.cl.max'):
+                self.txtCtrl_cl_max.SetValue(splitPar[1])
+                self.oldClMax = float(splitPar[1])
+            if (splitPar[0] == 'motor.cl.min'):
+                self.txtCtrl_cl_min.SetValue(splitPar[1])
+                self.oldClMin = float(splitPar[1])
+            if (splitPar[0] == 'motor.sl.ki'):
+                self.txtCtrl_sl_ki.SetValue(splitPar[1])
+                self.oldSlKi = float(splitPar[1])
+            if (splitPar[0] == 'motor.sl.max'):
+                self.txtCtrl_sl_max.SetValue(splitPar[1])
+                self.oldSlMax = float(splitPar[1])
+            if (splitPar[0] == 'motor.sl.min'):
+                self.txtCtrl_sl_min.SetValue(splitPar[1])
+                self.oldSlMin = float(splitPar[1])
+            if (splitPar[0] == 'throttle.has_switch'):
+                self.txtCtrl_has_switch.SetValue(splitPar[1])
+                self.oldHasSwitch = float(splitPar[1])
+            if (splitPar[0] == 'power_margin'):
+                self.txtCtrl_power_margin.SetValue(splitPar[1])
+                self.oldPowerMargin = float(splitPar[1])
+            if (splitPar[0] == 'power_factor'):
+                self.txtCtrl_power_factor.SetValue(splitPar[1])
+                self.oldPowerFactor = float(splitPar[1])
+            if (splitPar[0] == 'led.brightness_lo'):
+                self.txtCtrl_brightness_lo.SetValue(splitPar[1])
+                self.oldBrightnessLo = float(splitPar[1])
+            if (splitPar[0] == 'brake_temp_ok'):
+                self.txtCtrl_brake_temp_ok.SetValue(splitPar[1])
+                self.oldBrakeTempOk = float(splitPar[1])
+            if (splitPar[0] == 'brake_temp_hi'):
+                self.txtCtrl_brake_temp_hi.SetValue(splitPar[1])
+                self.oldBrakeTempHi = float(splitPar[1])
+            if (splitPar[0] == 'brake_max_id'):
+                self.txtCtrl_brake_max_id.SetValue(splitPar[1])
+                self.oldBrakeMaxId = float(splitPar[1])
+            if (splitPar[0] == 'brake_test.pos_ratio'):
+                self.txtCtrl_brake_pos_ratio.SetValue(splitPar[1])
+                self.oldBrakePosRatio = float(splitPar[1])
+            if (splitPar[0] == 'trajec.acc'):
+                self.txtCtrl_trajec_acc.SetValue(splitPar[1])
+                self.oldTrajecAcc = float(splitPar[1])
+            if (splitPar[0] == 'trajec.ret'):
+                self.txtCtrl_trajec_ret.SetValue(splitPar[1])
+                self.oldTrajecRet = float(splitPar[1])
+            if (splitPar[0] == 'dominant_throttle_on'):
+                self.txtCtrl_dominant_throttle_on.SetValue(splitPar[1])
+                self.oldDominantThrottle = float(splitPar[1])
+            if (splitPar[0] == 'max_motor_temp'):
+                self.txtCtrl_max_motor_temp.SetValue(splitPar[1])
+                self.oldMaxMotorTemp = float(splitPar[1])
+            if (splitPar[0] == 'num_motor_ch'):
+                self.txtCtrl_num_motor_ch.SetValue(splitPar[1])
+                self.oldNumMotorCh = float(splitPar[1])
+            if (splitPar[0] == 'idle_timeout'):
+                self.txtCtrl_idle_timeout.SetValue(splitPar[1])
+                self.oldIdleTimeout = float(splitPar[1])
+            if (splitPar[0] == 'rope_stuck_on'):
+                self.txtCtrl_rope_stuck_on.SetValue(splitPar[1])
+                self.oldRopeStuckOn = float(splitPar[1])
+            if (splitPar[0] == 'iq_alpha'):
+                self.txtCtrl_iq_alpha.SetValue(splitPar[1])
+                self.oldIqAlpha = float(splitPar[1])
+            if (splitPar[0] == 'speed_alpha'):
+                self.txtCtrl_speed_alpha.SetValue(splitPar[1])
+                self.oldSpeedAlpha = float(splitPar[1])
+            if (splitPar[0] == 'undershoot'):
+                self.txtCtrl_undershoot.SetValue(splitPar[1])
+                self.oldUndershoot = float(splitPar[1])
+            if (splitPar[0] == 'delay_start'):
+                self.txtCtrl_delay_start.SetValue(splitPar[1])
+                self.oldDelayStart = float(splitPar[1])
 
     def setup_config_params(self):
 
@@ -305,8 +296,8 @@ class ProdTestForm(wx.Panel):
         paramTopSizer.Add(paramSizer7, 0, wx.ALL, 10)
 
         statBoxConfigParams = wx.StaticBox(self, wx.ID_ANY, '  Set paramters')
-        statBoxConfigParams.SetBackgroundColour(GREY)
-        statBoxConfigParams.SetForegroundColour(BLACK)
+        statBoxConfigParams.SetBackgroundColour(common.GREY)
+        statBoxConfigParams.SetForegroundColour(common.BLACK)
         statBoxSizer = wx.StaticBoxSizer(statBoxConfigParams, wx.VERTICAL)
 
         statBoxSizer.Add(paramTopSizer, 0, wx.ALL, 10)
@@ -361,8 +352,8 @@ class ProdTestForm(wx.Panel):
         paramSizer3.Add(btnSaveParam, 0, wx.LEFT, 15)
 
         statBoxTestEnhanced = wx.StaticBox(self, wx.ID_ANY, '  Enhanced Measuring')
-        statBoxTestEnhanced.SetBackgroundColour(GREY)
-        statBoxTestEnhanced.SetForegroundColour(BLACK)
+        statBoxTestEnhanced.SetBackgroundColour(common.GREY)
+        statBoxTestEnhanced.SetForegroundColour(common.BLACK)
         statBoxSizer = wx.StaticBoxSizer(statBoxTestEnhanced, wx.VERTICAL)
 
         statBoxSizer.Add(paramSizer1, 0, wx.TOP|wx.BOTTOM|wx.LEFT, 10)
@@ -385,7 +376,7 @@ class ProdTestForm(wx.Panel):
         txtNull  = wx.StaticText(self, wx.ID_ANY, ' ')
 
         self.spinCtrlSpeed = wx.SpinCtrl(self, value='0')
-        self.spinCtrlSpeed.SetRange(0, MOTOR_SPEED)
+        self.spinCtrlSpeed.SetRange(0, common.MOTOR_SPEED)
 
         paramSizer1 = wx.BoxSizer(wx.VERTICAL)
         paramSizer1.Add(speed, 0, wx.LEFT, 30)
@@ -397,8 +388,8 @@ class ProdTestForm(wx.Panel):
         paramSizer2.Add(btnTestStop, 0, wx.TOP|wx.LEFT, 25)
 
         statBoxTestRun = wx.StaticBox(self, wx.ID_ANY, '  Test Run')
-        statBoxTestRun.SetBackgroundColour(GREY)
-        statBoxTestRun.SetForegroundColour(BLACK)
+        statBoxTestRun.SetBackgroundColour(common.GREY)
+        statBoxTestRun.SetForegroundColour(common.BLACK)
         statBoxSizer = wx.StaticBoxSizer(statBoxTestRun, wx.HORIZONTAL)
 
         statBoxSizer.Add(paramSizer1, 0, wx.ALL, 10)
@@ -596,11 +587,11 @@ class ProdTestForm(wx.Panel):
         # ----------------------------------------------------------------------------------------------------
         newDominantThrottle = int(self.txtCtrl_dominant_throttle_on.GetValue())
         if (newDominantThrottle > 1 or newDominantThrottle < 0):
-            self.txtCtrl_dominant_throttle_on.SetForegroundColour((RED))
+            self.txtCtrl_dominant_throttle_on.SetForegroundColour((common.RED))
 
         else:
             if (newDominantThrottle != self.oldDominantThrottle):
-                self.txtCtrl_dominant_throttle_on.SetForegroundColour((BLACK))
+                self.txtCtrl_dominant_throttle_on.SetForegroundColour((common.BLACK))
                 time.sleep(WAIT_DELAY)
                 local_cmd = 'param set dominant_throttle_on ' + self.txtCtrl_dominant_throttle_on.GetValue().encode('ascii', 'ignore')
                 serial_cmd(local_cmd, self.mySer)
@@ -645,11 +636,11 @@ class ProdTestForm(wx.Panel):
         # ----------------------------------------------------------------------------------------------------
         newRopeStuckOn = int(self.txtCtrl_rope_stuck_on.GetValue())
         if (newRopeStuckOn > 1 or newRopeStuckOn < 0):
-                self.txtCtrl_rope_stuck_on.SetForegroundColour((RED))
+                self.txtCtrl_rope_stuck_on.SetForegroundColour((common.RED))
 
         else:
             if (newRopeStuckOn != self.oldRopeStuckOn):
-                self.txtCtrl_rope_stuck_on.SetForegroundColour((BLACK))
+                self.txtCtrl_rope_stuck_on.SetForegroundColour((common.BLACK))
                 time.sleep(WAIT_DELAY)
                 local_cmd = 'param set rope_stuck_on ' + self.txtCtrl_rope_stuck_on.GetValue().encode('ascii', 'ignore')
                 serial_cmd(local_cmd, self.mySer)
@@ -707,11 +698,11 @@ class ProdTestForm(wx.Panel):
         # ----------------------------------------------------------------------------------------------------
         newDelayStart = int(self.txtCtrl_delay_start.GetValue())
         if (newDelayStart > 80000 or newDelayStart < 0):
-                self.txtCtrl_delay_start.SetForegroundColour((RED))
+                self.txtCtrl_delay_start.SetForegroundColour((common.RED))
 
         else:
             if (newDelayStart != self.oldDelayStart):
-                self.txtCtrl_delay_start.SetForegroundColour((BLACK))
+                self.txtCtrl_delay_start.SetForegroundColour((common.BLACK))
                 time.sleep(WAIT_DELAY)
                 # unicode mess ;-)
                 local_cmd = 'param set delay_start ' + self.txtCtrl_delay_start.GetValue().encode('ascii', 'ignore')
@@ -751,14 +742,14 @@ class ProdTestForm(wx.Panel):
             logging.info('Inject ON')
             self.txtMultiCtrl.AppendText('Inject On' + "\n")
             serial_cmd('param set ti 1', self.mySer)
-            self.btnTestInject.SetBackgroundColour(RED)
+            self.btnTestInject.SetBackgroundColour(common.RED)
             self.toggle = True
 
         else:
             logging.info('Inject OFF')
             self.txtMultiCtrl.AppendText('Inject Off' + "\n")
             serial_cmd('param set ti 0', self.mySer)
-            self.btnTestInject.SetBackgroundColour(WHITE)
+            self.btnTestInject.SetBackgroundColour(common.WHITE)
             self.toggle = False
 
     def onGetIq(self, event):
