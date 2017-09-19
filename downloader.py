@@ -85,7 +85,8 @@ class DownLoaderForm(wx.Panel):
         time.sleep(common.DELAY_05)
         #logging.info('Read remote controller version from serial port: %s', self.serialPort)
 
-        if (select == 1):
+        # if port is connected
+        if select == 1:
             self.remoteVersion = serial_read('r_v', 70, self.serialPort)
 
             rVersion = self.remoteVersion.split("r_v")
@@ -98,19 +99,19 @@ class DownLoaderForm(wx.Panel):
     def get_ascender_version(self, select):
         time.sleep(common.DELAY_05)
 
-        if (select == 1):
+        # if port is connected
+        if select == 1:
 
             self.ascenderVersion = serial_read('v', 60, self.serialPort)
             aVersion = self.ascenderVersion.split("v")
             print aVersion[1]
 
-            #if (aVersion[1][2:6] == 'Unjo'):
             self.lblAscenderVersion.SetForegroundColour(common.BLACK)
             self.lblAscenderVersion.SetLabel(aVersion[1])
 
         else:
-                self.lblAscenderVersion.SetForegroundColour(common.RED)
-                self.lblAscenderVersion.SetLabel(' ')S
+            self.lblAscenderVersion.SetForegroundColour(common.RED)
+            self.lblAscenderVersion.SetLabel(' ')
 
         time.sleep(common.DELAY_05)
 
