@@ -30,6 +30,36 @@ def serial_read(cmd, no, serial):
     c = serial.read(no)
     return c
 
+def serial_read_no(cmd, no, serial):
+    # send command to serial port
+    serial.reset_input_buffer()
+    serial.reset_output_buffer()
+    serial.write(cmd+'\r');
+
+    # read data from serial port
+    c = serial.read(no)
+    return c
+
+def serial_read_fixed(cmd, serial):
+    # send command to serial port
+    serial.reset_input_buffer()
+    serial.reset_output_buffer()
+    serial.write(cmd+'\r');
+
+    cnt = 0
+    tracedData = []
+
+    while True:
+        line = serial.readline()
+        cnt += 1
+        #print cnt, line,
+        tracedData.append(line)
+
+        if (cnt > 240):
+            break
+
+    return tracedData
+
 
 def list_serial_ports():
     """"

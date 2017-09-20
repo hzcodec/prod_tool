@@ -11,6 +11,7 @@ import select
 import sys
 import os
 import common
+import poll_port as pp
 
 BORDER1 = 10
 BORDER2 = 5
@@ -27,47 +28,6 @@ TARGET_SPEED2 = -19.9
 
 # time delay until speed is reached its target speed
 TIME_DELAY1 = 80
-
-
-def serial_cmd(cmd, serial):
-    # send command to serial port
-    try:
-        serial.write(cmd + '\r');
-        serial.reset_output_buffer()
-    except:
-        logging.info('Not connected')
-
-
-def serial_read(cmd, serial):
-    # send command to serial port
-    serial.reset_input_buffer()
-    serial.reset_output_buffer()
-    serial.write(cmd+'\r');
-
-    cnt = 0
-    tracedData = []
-
-    while True:
-        line = serial.readline()
-        cnt += 1
-        #print cnt, line,
-        tracedData.append(line)
-
-        if (cnt > 240):
-            break
-
-    return tracedData
-
-
-def serial_read2(cmd, no, serial):
-    # send command to serial port
-    serial.reset_input_buffer()
-    serial.reset_output_buffer()
-    serial.write(cmd+'\r');
-
-    # read data from serial port
-    c = serial.read(no)
-    return c
 
 
 class MatPlot(threading.Thread):
@@ -136,18 +96,18 @@ class GetTraceData(threading.Thread):
 	    Run motor up for 2 seconds at speed 20. Then run motor down for 2 seconds at speed -20.
 	    Get trace dump after each run.
         """
-        serial_cmd('trace prescaler 10', self.ser)
+        pp.serial_cmd('trace prescaler 10', self.ser)
         time.sleep(0.5)
-        serial_cmd('trace trig set_speed > 5.0000 10', self.ser)
+        pp.serial_cmd('trace trig set_speed > 5.0000 10', self.ser)
         time.sleep(0.5)
-        serial_cmd('trace selall iq speed set_speed', self.ser)
+        pp.serial_cmd('trace selall iq speed set_speed', self.ser)
         time.sleep(0.5)
-        serial_cmd('trace reset', self.ser)
+        pp.serial_cmd('trace reset', self.ser)
         time.sleep(0.5)
          
         # enable drive stage, release brake and start motor at speed 20
         self.enable_motor()
-        serial_cmd('speed 20', self.ser)
+        pp.serial_cmd('speed 20', self.ser)
         time.sleep(2)
         
         self.stop_motor()
@@ -155,41 +115,41 @@ class GetTraceData(threading.Thread):
         # get trace dump values
         time.sleep(1)
         logging.info('Get trace dump 1')
-        rv = serial_read('trace dump', self.ser)
+        rv = pp.serial_read_fixed('trace dump', self.ser)
         time.sleep(1)
 
         # reset dump area and set new trigger
-        serial_cmd('trace reset', self.ser)
+        pp.serial_cmd('trace reset', self.ser)
         time.sleep(0.5)
-        serial_cmd('trace trig set_speed < -5.0000 10', self.ser)
+        pp.serial_cmd('trace trig set_speed < -5.0000 10', self.ser)
         time.sleep(0.5)
 
         # enable drive stage, release brake and start motor at speed -20
         self.enable_motor()
-        serial_cmd('speed -20', self.ser)
+        pp.serial_cmd('speed -20', self.ser)
         time.sleep(2)
 
         self.stop_motor()
 
         # get trace dump values
         logging.info('Get trace dump 2')
-        rv2 = serial_read('trace dump', self.ser)
+        rv2 = pp.serial_read_fixed('trace dump', self.ser)
         time.sleep(1)
 
         self.analyze_data(rv, rv2)
 
     def enable_motor(self):
-        serial_cmd('e', self.ser)
+        pp.serial_cmd('e', self.ser)
         time.sleep(1)
-        serial_cmd('brake 0', self.ser)
+        pp.serial_cmd('brake 0', self.ser)
         time.sleep(1)
 
     def stop_motor(self):
-        serial_cmd('speed 0', self.ser)
+        pp.serial_cmd('speed 0', self.ser)
         time.sleep(1)
-        serial_cmd('brake 1', self.ser)
+        pp.serial_cmd('brake 1', self.ser)
         time.sleep(1)
-        serial_cmd('d', self.ser)
+        pp.serial_cmd('d', self.ser)
 
     def analyze_data(self, traceData1, traceData2):
         logging.info('')
@@ -433,9 +393,9 @@ class TraceTestForm(wx.Panel):
         logging.info('')
 
         try:
-            rv = serial_read2('status', 79, self.mySer)
+            rv = pp.serial_read_no('status', 79, self.mySer)
             time.sleep(0.2)
-            rv = serial_read2('status', 79, self.mySer)
+            rv = pp.serial_read_no('status', 79, self.mySer)
             print 'Status return', rv
 
             self.vBatValue.SetLabel(rv[12:18])
