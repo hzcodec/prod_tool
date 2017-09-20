@@ -137,7 +137,7 @@ class DownLoaderForm(wx.Panel):
         self.serialPort = serialPort
 
         if (serialPort == None):
-            logging.info('Port is not available: %s', serialPort)
+            #logging.info('Port is not available: %s', serialPort)
             self.lblConnect.SetForegroundColour(common.RED)
             self.lblConnect.SetLabel('No connection')
             self.lock = False
@@ -145,7 +145,7 @@ class DownLoaderForm(wx.Panel):
             self.get_ascender_version(common.Port.PORT_NOT_AVAILABLE)
 
         else:
-            logging.info('Port is available @ port name: %s', serialPortName)
+            #logging.info('Port is available @ port name: %s', serialPortName)
             self.lblConnect.SetForegroundColour(common.GREEN)
             self.lblConnect.SetLabel("Connected to " + serialPortName)
 
