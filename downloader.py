@@ -202,10 +202,6 @@ class DownLoaderForm(wx.Panel):
         txtSerPortSizer = wx.BoxSizer(wx.HORIZONTAL)
         txtSerPortSizer.Add(txtSerialPort, 0, wx.TOP, common.TEXT_SERIAL_PORT_BORDER)
 
-        # get current port names like ACM0 from /dev/ttyACM0
-        # TODO: is strippedPortNames used?
-        strippedPortNames, self.lengthOfPortNameList = pp.get_serial_ports()
-
         statBoxSerial = wx.StaticBox(self, wx.ID_ANY, '  Serial connection    ')
         statBoxSerial.SetBackgroundColour(common.GREY)
         statBoxSerial.SetForegroundColour(common.BLACK)
@@ -217,7 +213,7 @@ class DownLoaderForm(wx.Panel):
 
         statBoxSizer.Add(txtSerPortSizer, 0, wx.TOP|wx.BOTTOM|wx.LEFT, 15)
         statBoxSizer.Add(self.lblConnect, 0, wx.TOP|wx.BOTTOM|wx.LEFT, 25)
-        statBoxSizer.Add(txtNull, 0, wx.LEFT, 782) # this is just to get the statBoxSerial larger
+        statBoxSizer.Add(txtNull, 0, wx.LEFT, 782) # this magic number is just to get the statBoxSerial larger
 
         return statBoxSizer
 
