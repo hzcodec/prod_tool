@@ -83,7 +83,7 @@ class DownLoaderForm(wx.Panel):
 
     def get_remote_controller_version(self, select):
         time.sleep(common.DELAY_05)
-        #logging.info('Read remote controller version from serial port: %s', self.serialPort)
+        logging.info('Read remote controller version from serial port: %s, select=%d', self.serialPort, select)
 
         # if port is connected
         if select == 1:
@@ -137,7 +137,7 @@ class DownLoaderForm(wx.Panel):
         self.serialPort = serialPort
 
         if (serialPort == None):
-            #logging.info('Port is not available: %s', serialPort)
+            logging.info('Port is not available: %s', serialPort)
             self.lblConnect.SetForegroundColour(common.RED)
             self.lblConnect.SetLabel('No connection')
             self.lock = False
@@ -145,7 +145,7 @@ class DownLoaderForm(wx.Panel):
             self.get_ascender_version(common.Port.PORT_NOT_AVAILABLE)
 
         else:
-            #logging.info('Port is available @ port name: %s', serialPortName)
+            logging.info('Port is available @ port name: %s', serialPortName)
             self.lblConnect.SetForegroundColour(common.GREEN)
             self.lblConnect.SetLabel("Connected to " + serialPortName)
 
@@ -198,36 +198,26 @@ class DownLoaderForm(wx.Panel):
             self.lblConnect.SetLabel("Port not Connected")
 
     def setup_serial_sizer(self):
-        txtSerialPort = wx.StaticText(self, wx.ID_ANY, 'Select serial port')
+        txtSerialPort = wx.StaticText(self, wx.ID_ANY, 'Serial Port:')
         txtSerPortSizer = wx.BoxSizer(wx.HORIZONTAL)
         txtSerPortSizer.Add(txtSerialPort, 0, wx.TOP, common.TEXT_SERIAL_PORT_BORDER)
 
         # get current port names like ACM0 from /dev/ttyACM0
+        # TODO: is strippedPortNames used?
         strippedPortNames, self.lengthOfPortNameList = pp.get_serial_ports()
-
-        self.comboBox = wx.ComboBox(self, choices=strippedPortNames)
-        self.comboBox.SetSelection(0) # preselect ACM0
-        self.comboBox.Bind(wx.EVT_COMBOBOX, self.onCombo)
-
-        comboSizer = wx.BoxSizer(wx.HORIZONTAL)
-        comboSizer.Add(self.comboBox, 0, wx.TOP, 10)
 
         statBoxSerial = wx.StaticBox(self, wx.ID_ANY, '  Serial connection    ')
         statBoxSerial.SetBackgroundColour(common.GREY)
         statBoxSerial.SetForegroundColour(common.BLACK)
         statBoxSizer = wx.StaticBoxSizer(statBoxSerial, wx.HORIZONTAL)
 
-        btnConnect = wx.Button(self, wx.ID_ANY, 'Connect')
-        self.Bind(wx.EVT_BUTTON, self.onConnect, btnConnect)
         self.lblConnect = wx.StaticText(self, label= 'Not connected')
 
         txtNull = wx.StaticText(self, wx.ID_ANY, ' ')
 
         statBoxSizer.Add(txtSerPortSizer, 0, wx.TOP|wx.BOTTOM|wx.LEFT, 15)
-        statBoxSizer.Add(comboSizer, 0, wx.TOP|wx.BOTTOM|wx.LEFT, 10)
-        statBoxSizer.Add(btnConnect, 0, wx.TOP|wx.BOTTOM|wx.LEFT, 20)
         statBoxSizer.Add(self.lblConnect, 0, wx.TOP|wx.BOTTOM|wx.LEFT, 25)
-        statBoxSizer.Add(txtNull, 0, wx.LEFT, 545) # this is just to get the statBoxSerial larger
+        statBoxSizer.Add(txtNull, 0, wx.LEFT, 782) # this is just to get the statBoxSerial larger
 
         return statBoxSizer
 
