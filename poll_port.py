@@ -11,6 +11,26 @@ import logging
 import common
 
 
+def serial_cmd(cmd, serial):
+    # send command to serial port
+    try:
+        serial.write(cmd + '\r');
+    except:
+        logging.info('Not connected')
+
+
+def serial_read(cmd, no, serial):
+    # send command to serial port
+    serial.write(cmd+'\r');
+    #serial.reset_input_buffer()
+    serial.reset_output_buffer()
+    serial.flush()
+
+    # read data from serial port
+    c = serial.read(no)
+    return c
+
+
 def list_serial_ports():
     """"
         scan current connected port names

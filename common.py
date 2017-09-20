@@ -14,7 +14,6 @@ WHITE   = (255, 255, 255)
 GREEN = (36, 119, 62)
 
 
-
 # time delays in seconds
 DELAY_05 = 0.5
 DELAY_03 = 0.3

@@ -24,26 +24,6 @@ PARAMETER_NAMES = ['motor.cl.kp', 'motor.cl.ki', 'motor.cl.kt', 'motor.cl.max', 
                     'mx', 'mi', 'delay_start', 'speed_lim', 'undershoot', 'ti']
 
 
-def serial_cmd(cmd, serial):
-    # send command to serial port
-    try:
-        serial.write(cmd + '\r');
-    except:
-        logging.info('Not connected')
-
-
-def serial_read(cmd, no, serial):
-    # send command to serial port
-    serial.write(cmd+'\r');
-    #serial.reset_input_buffer()
-    serial.reset_output_buffer()
-    serial.flush()
-
-    # read data from serial port
-    c = serial.read(no)
-    return c
-
-
 class DownLoaderForm(wx.Panel):
 
     def __init__(self, parent):
@@ -87,7 +67,7 @@ class DownLoaderForm(wx.Panel):
 
         # if port is connected
         if select == 1:
-            self.remoteVersion = serial_read('r_v', 70, self.serialPort)
+            self.remoteVersion = pp.serial_read('r_v', 70, self.serialPort)
 
             rVersion = self.remoteVersion.split("r_v")
             print self.remoteVersion
@@ -102,7 +82,7 @@ class DownLoaderForm(wx.Panel):
         # if port is connected
         if select == 1:
 
-            self.ascenderVersion = serial_read('v', 60, self.serialPort)
+            self.ascenderVersion = pp.serial_read('v', 60, self.serialPort)
             aVersion = self.ascenderVersion.split("v")
             print aVersion[1]
 
@@ -186,7 +166,7 @@ class DownLoaderForm(wx.Panel):
                 local_cmd = 'param set ' + PARAMETER_NAMES[parIndex] + par3
 
                 print '[%d] - %s' % (parIndex, local_cmd)
-                serial_cmd(local_cmd, self.mySer)
+                pp.serial_cmd(local_cmd, self.mySer)
                 time.sleep(common.DELAY_03)
                 self.gauge.SetValue(parIndex)
                 wx.Yield()
@@ -292,4 +272,4 @@ class DownLoaderForm(wx.Panel):
     def onSaveParam(self, event):
         # TODO: add check if param file has been loaded
         logging.info('')
-        serial_cmd('param save', self.mySer)
+        pp.serial_cmd('param save', self.mySer)
