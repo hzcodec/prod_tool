@@ -1,0 +1,17 @@
+How to generate an .exe file.
+
+  > pyinstaller -F prod_test_tool.py
+
+
+Under /dist a binary is stored.
+
+To run this:
+  > ./prod_test_tool
+
+For production test at ActSafe:
+  put the .exe file on Desktop and matplot.py
+
+Create a shortcut to the application with (see 1/UMAN-600:00 331):
+    gnome-desktop-item-edit --create_new
+
+A directory, logdata, is created on Desktop. Log data is stored.
