@@ -243,8 +243,9 @@ class TraceTestForm(wx.Panel):
         topSizer.Add(statusSizer, 0, wx.TOP|wx.LEFT|wx.RIGHT, BORDER1)
         self.SetSizer(topSizer)
 
-        pub.subscribe(self.serialListener, 'serialListener')
-        pub.subscribe(self.configListener, 'configListener')
+        pub.subscribe(self.serialListener, 'TOPIC_SERIAL_LISTENER')
+        pub.subscribe(self.configListener, 'TOPIC_CONFIG_LISTENER')
+        # TODO: rename dataListener to TOPIC_...
         pub.subscribe(self.dataListener, 'dataListener')
 
         logging.basicConfig(format="%(filename)s: %(funcName)s() - %(message)s", level=logging.INFO)
