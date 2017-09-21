@@ -403,6 +403,7 @@ class ProdTestForm(wx.Panel):
         return self.txtMultiCtrl
 
     def onConnect(self, event):
+        # TODO: connect button? Is this valid?
         print 'Connect'
         serial_cmd('v', self.mySer)
 
