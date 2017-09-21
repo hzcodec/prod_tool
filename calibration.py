@@ -47,12 +47,12 @@ class CalibForm(wx.Panel):
 
         self.btnSaveParam.Enable(False) # disabel save param button from beginning, enabled after last calibration
 
-        pub.subscribe(self.serialListener, 'serialListener')
+        pub.subscribe(self.serialListener, "TOPIC_SERIAL_LISTENER")
         pub.subscribe(self.aligned_finished, "TOPIC_ALIGNED")
         logging.basicConfig(format="%(filename)s: %(funcName)s() - %(message)s", level=logging.INFO)
 
     def serialListener(self, message, fname=None):
-        print 'msg:', message
+        print 'Calibration got msg:', message
         self.mySer = message
 
     def setup_alignment_sizer(self):

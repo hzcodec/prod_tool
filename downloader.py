@@ -32,6 +32,7 @@ class DownLoaderForm(wx.Panel):
         logging.basicConfig(format="%(filename)s: %(funcName)s() - %(message)s", level=logging.INFO)
         logging.info('Length of PARAMETER_NAMES list: %d', len(PARAMETER_NAMES))
 
+        # TODO: self.ser is probably not used. Check this.
         self.ser = None
         self.lengthOfPortNameList = 0
         self.serialPort = None
@@ -83,7 +84,6 @@ class DownLoaderForm(wx.Panel):
 
             self.ascenderVersion = pp.serial_read('v', 60, self.serialPort)
             aVersion = self.ascenderVersion.split("v")
-            print aVersion[1][2:9]
 
             if aVersion[1][2:9] != 'Unjo 50':
                 self.lblAscenderVersion.SetForegroundColour(common.RED)
@@ -100,6 +100,7 @@ class DownLoaderForm(wx.Panel):
 
     def serialListener(self, message, fname=None):
         logging.info('')
+        # TODO: shall mySer be initialized in __init__? It is but maybe not used anymore instead serialPort shall be used
         self.mySer = message
 
     def configListener(self, message, fname=None):
@@ -137,6 +138,9 @@ class DownLoaderForm(wx.Panel):
                 self.get_remote_controller_version(common.Port.PORT_AVAILABLE)
                 self.get_ascender_version(common.Port.PORT_AVAILABLE)
                 self.lock = True
+
+                # TODO: send message to trace, ...
+                pub.sendMessage('TOPIC_SERIAL_LISTENER', message=self.serialPort)
 
     def print_parameters(self):
         """
