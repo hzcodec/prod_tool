@@ -30,6 +30,7 @@ def serial_read(cmd, no, serial):
     c = serial.read(no)
     return c
 
+
 def serial_read_no(cmd, no, serial):
     # send command to serial port
     serial.reset_input_buffer()
@@ -39,6 +40,7 @@ def serial_read_no(cmd, no, serial):
     # read data from serial port
     c = serial.read(no)
     return c
+
 
 def serial_read_fixed(cmd, serial):
     # send command to serial port

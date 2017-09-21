@@ -11,18 +11,6 @@ BORDER1 = 5
 TEXT_SERIAL_PORT_BORDER = 10
 
 
-def serial_read(cmd, no, serial):
-    # send command to serial port
-    serial.write(cmd+'\r');
-    serial.reset_input_buffer()
-    serial.reset_output_buffer()
-    serial.flush()
-
-    # read data from serial port
-    c = serial.read(no)
-    return c
-
-
 class ProdTestForm(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
@@ -744,7 +732,7 @@ class ProdTestForm(wx.Panel):
         logging.info('')
         try:
             self.txtMultiCtrl.AppendText('get_iq ' + "\n")
-            rv = serial_read('get_iq', 64, self.mySer)
+            rv = pp.serial_read('get_iq', 64, self.mySer)
             self.txtMultiCtrl.AppendText(rv[6:21])
             self.txtMultiCtrl.AppendText(rv[22:36])
             self.txtMultiCtrl.AppendText(rv[37:59] + "\n")
