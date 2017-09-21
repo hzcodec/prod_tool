@@ -31,7 +31,9 @@ TIME_DELAY1 = 80
 
 
 class MatPlot(threading.Thread):
-
+    """
+      Need to start matplot.py via a thread.
+    """
     def __init__(self):
         th = threading.Thread.__init__(self)
 
