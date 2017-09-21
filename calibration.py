@@ -10,6 +10,7 @@ import poll_port as pp
 
 BORDER1 = 10
 
+# TODO: serial_cmd should be replaced by poll_port
 def serial_cmd(cmd, serial):
     # send command to serial port
     try:
