@@ -9,20 +9,6 @@ from wx.lib.pubsub import setupkwargs
 import common
 import poll_port as pp
 
-# current parameters
-PARAMETER_NAMES = ['motor.cl.kp', 'motor.cl.ki', 'motor.cl.kt', 'motor.cl.max', 'motor.cl.min', \
-                   'motor.sl.kp', 'motor.sl.ki', 'motor.sl.kt', 'motor.sl.max', 'motor.sl.min', \
-                    'trajec.acc', 'trajec.ret', 'throttle.zero', 'throttle.down', 'throttle.up', \
-                    'throttle.deadband_on', 'throttle.deadband_off', 'throttle.has_switch', 'num_motor_ch', \
-                    'power_out', 'power_in', 'brake_temp_ok', 'brake_temp_hi', 'brake_max_id', \
-                    'angle_offset', 'alignment_current', \
-                    'sin_bias', 'sin_gain', 'cos_bias', 'cos_gain', \
-                    'brake_test.pos_ratio', 'brake_test.neg_ratio', 'psu_ok', 'led.brightness_hi', 'led.brightness_lo', \
-                    'idreg.kp', 'idreg.ki', 'idreg.kt', 'power_margin', 'power_factor', \
-                    'speed_filter', 'max_motor_temp', 'idle_timeout', 'remote_ctrl_timeout', 'soc_lim_run_up', \
-                    'max_drive_temp', 'dominant_throttle_on', 'rope_stuck_on', 'iq_alpha', 'speed_alpha', \
-                    'mx', 'mi', 'delay_start', 'speed_lim', 'undershoot', 'ti']
-
 
 class DownLoaderForm(wx.Panel):
 
@@ -30,7 +16,7 @@ class DownLoaderForm(wx.Panel):
         wx.Panel.__init__(self, parent)
 
         logging.basicConfig(format="%(filename)s: %(funcName)s() - %(message)s", level=logging.INFO)
-        logging.info('Length of PARAMETER_NAMES list: %d', len(PARAMETER_NAMES))
+        #logging.info('Length of PARAMETER_NAMES list: %d', len(PARAMETER_NAMES))
 
         # TODO: self.ser is probably not used. Check this.
         self.ser = None
@@ -55,7 +41,6 @@ class DownLoaderForm(wx.Panel):
         pub.subscribe(self.serialListener, 'TOPIC_SERIAL_LISTENER')
         pub.subscribe(self.portScannedName, 'TOPIC_PORTNAME')
 
-        self.parameter_names_length = len(PARAMETER_NAMES)
         self.btnSaveParam.Enable(False)
 
         pp.PollPortName() # start polling port thread
@@ -174,7 +159,7 @@ class DownLoaderForm(wx.Panel):
                 par1 = self.configParameters[parIndex]
                 par2 = par1.split(',')
                 par3 = par2[1].strip('\n')
-                local_cmd = 'param set ' + PARAMETER_NAMES[parIndex] + par3
+                local_cmd = 'param set ' + par2[0] + par3
 
                 print '[%d] - %s' % (parIndex, local_cmd)
                 #pp.serial_cmd(local_cmd, self.mySer)
