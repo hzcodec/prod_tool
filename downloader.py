@@ -73,8 +73,11 @@ class DownLoaderForm(wx.Panel):
             print self.remoteVersion
             self.lblRemoteVersion.SetForegroundColour(common.BLACK)
             self.lblRemoteVersion.SetLabel(rVersion[1])
+
+            self.connected = True
         else:
             self.lblRemoteVersion.SetLabel(' ')
+            self.connected = False
 
     def get_ascender_version(self, select):
         time.sleep(common.DELAY_05)
@@ -142,6 +145,7 @@ class DownLoaderForm(wx.Panel):
                 # TODO: send message to trace, ...
                 pub.sendMessage('TOPIC_SERIAL_LISTENER', message=self.serialPort)
 
+    # TODO: is print_parameters() used?
     def print_parameters(self):
         """
             Update filename in Configuration sizer.
@@ -158,6 +162,7 @@ class DownLoaderForm(wx.Panel):
             Save param button is disabled during configuration.
         """
         if (self.connected == True):
+
             self.btnSaveParam.Enable(False)
             parListLength = len(self.configParameters)
             logging.info('Par list length: %s', parListLength)
@@ -173,13 +178,12 @@ class DownLoaderForm(wx.Panel):
                 local_cmd = 'param set ' + PARAMETER_NAMES[parIndex] + par3
 
                 print '[%d] - %s' % (parIndex, local_cmd)
-                pp.serial_cmd(local_cmd, self.mySer)
+                #pp.serial_cmd(local_cmd, self.mySer)
                 time.sleep(common.DELAY_03)
                 self.gauge.SetValue(parIndex)
                 wx.Yield()
 
             self.btnSaveParam.Enable(True)
-
         else:
             self.lblConnect.SetForegroundColour(common.RED)
             self.lblConnect.SetLabel("Port not Connected")

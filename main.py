@@ -5,7 +5,10 @@ import calibration
 import common
 import prodtest
 import trace
+from wx.lib.pubsub import pub
+from wx.lib.pubsub import setupkwargs
 
+# TODO: handle csv file with correct library
 
 def print_const():
     app = wx.GetApp()
@@ -80,7 +83,7 @@ class MainFrame(wx.Frame):
             lines = f.readlines()
 
         # pass configuration parameters to downloader and prodtest
-        pub.sendMessage('configListener', message=lines, fname=openFileDialog.GetFilename())
+        pub.sendMessage('TOPIC_CONFIG_LISTENER', message=lines, fname=openFileDialog.GetFilename())
         self.tabDownLoader.print_parameters()
         openFileDialog.Destroy()
 
