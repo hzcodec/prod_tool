@@ -50,7 +50,6 @@ class DownLoaderForm(wx.Panel):
         topSizer.Add(configSizer, 0, wx.TOP|wx.LEFT, 10)
         self.SetSizer(topSizer)
 
-        # TODO: rename configListener in trace.py and in main.py
         pub.subscribe(self.configListener, 'TOPIC_CONFIG_LISTENER')
         pub.subscribe(self.serialListener, 'TOPIC_SERIAL_LISTENER')
         pub.subscribe(self.portScannedName, 'TOPIC_PORTNAME')
@@ -84,10 +83,14 @@ class DownLoaderForm(wx.Panel):
 
             self.ascenderVersion = pp.serial_read('v', 60, self.serialPort)
             aVersion = self.ascenderVersion.split("v")
-            print aVersion[1]
+            print aVersion[1][2:9]
 
-            self.lblAscenderVersion.SetForegroundColour(common.BLACK)
-            self.lblAscenderVersion.SetLabel(aVersion[1])
+            if aVersion[1][2:9] != 'Unjo 50':
+                self.lblAscenderVersion.SetForegroundColour(common.RED)
+                self.lblAscenderVersion.SetLabel('\nIs Ascender connected to remote controller?')
+            else:
+                self.lblAscenderVersion.SetForegroundColour(common.BLACK)
+                self.lblAscenderVersion.SetLabel(aVersion[1])
 
         else:
             self.lblAscenderVersion.SetForegroundColour(common.RED)
