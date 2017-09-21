@@ -80,8 +80,8 @@ class ProdTestForm(wx.Panel):
 
         self.SetSizer(topSizer)
         self.lock_text_controls()
-        pub.subscribe(self.serialListener, 'serialListener')
-        pub.subscribe(self.configListener, 'configListener')
+        pub.subscribe(self.serialListener, 'TOPIC_SERIAL_LISTENER')
+        pub.subscribe(self.configListener, 'TOPIC_CONFIG_LISTENER')
 
         logging.basicConfig(format="%(filename)s: %(funcName)s() - %(message)s", level=logging.INFO)
 
