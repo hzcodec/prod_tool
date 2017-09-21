@@ -145,7 +145,6 @@ class DownLoaderForm(wx.Panel):
                 # TODO: send message to trace, ...
                 pub.sendMessage('TOPIC_SERIAL_LISTENER', message=self.serialPort)
 
-    # TODO: is print_parameters() used?
     def print_parameters(self):
         """
             Update filename in Configuration sizer.
