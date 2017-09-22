@@ -45,7 +45,7 @@ class MatPlot(threading.Thread):
         self.start()    # start the thread
  
     def run(self):
-        # put matplot.py app at the same pos where prod_test_tool is
+        # put matplot.py app at the same pos where main.py is
         os.system(self.dirPath + '/Desktop/matplot.py&')
         #os.system(self.dirPath + '/matplot.py&')
 
@@ -60,8 +60,8 @@ class GetTraceData(threading.Thread):
         # find current path for application
         dirPath = os.getcwd()
         print 'dirPath:', dirPath
-        filePath = dirPath + '/Desktop/logdata'
-        #filePath = dirPath + '/logdata'
+        #filePath = dirPath + '/Desktop/logdata'
+        filePath = dirPath + '/logdata'
         print 'filePath for logdata:', filePath
 
         # create log directory
