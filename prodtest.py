@@ -793,8 +793,6 @@ class ProdTestForm(wx.Panel):
         time.sleep(1)
         pp.serial_cmd('speed ' + str(speedValue), self.mySer)
 
-
-
     def onTestStop(self, event):
         logging.info('')
         self.txtMultiCtrl.AppendText('Stop command ' + "\n")
