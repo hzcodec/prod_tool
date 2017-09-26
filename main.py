@@ -7,6 +7,9 @@ import prodtest
 import trace
 from wx.lib.pubsub import pub
 from wx.lib.pubsub import setupkwargs
+import datetime
+import sys
+import base64
 
 # TODO: handle csv file with correct library
 
@@ -181,9 +184,45 @@ class mainApp(wx.App):
        self.frame.Show()
        return True
 
+def check_licens():
+    print('Check current licens')
+    now = datetime.datetime.now().strftime("%Y-%m-%d   %H:%M")
+    print('Today is:', now)
+
+    try:
+        licFile = open("licensfile.lic", "r")
+        licDate = licFile.readline()
+        decodecDate = base64.b64decode(licDate.decode())
+
+        strippedDate = decodecDate.strip('\n')
+        splitDate = strippedDate.split('-')
+        trigger = 0
+
+        if (int(splitDate[0]) <= int(now[0:4])):  # year
+            if (int(splitDate[1]) < int(now[6:7])): # month
+                trigger = 1
+            else:
+                if (int(splitDate[2]) < int(now[8:10])): # day
+                    trigger = 1
+
+        if (trigger == 0):
+            print 'License OK. Will expire:', strippedDate
+        else:
+            print 'License has expiered:', strippedDate
+            sys.exit()
+
+    except IOError:
+        print 'No license file! Application is terminated.'
+        sys.exit()
+
+
+
+
 #=====================================================================================================================================
 #  Main
 #=====================================================================================================================================
 if __name__ == '__main__':
+    check_licens()
+
     app = mainApp()
     app.MainLoop()
