@@ -126,6 +126,7 @@ class DownLoaderForm(wx.Panel):
                 self.lock = True
 
                 # TODO: send message to trace, ...
+                # calibration, downloader, prodtest and trace are receiver
                 pub.sendMessage('TOPIC_SERIAL_LISTENER', message=self.serialPort)
 
     def print_parameters(self):
