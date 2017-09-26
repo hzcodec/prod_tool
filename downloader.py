@@ -18,8 +18,6 @@ class DownLoaderForm(wx.Panel):
         logging.basicConfig(format="%(filename)s: %(funcName)s() - %(message)s", level=logging.INFO)
         #logging.info('Length of PARAMETER_NAMES list: %d', len(PARAMETER_NAMES))
 
-        # TODO: self.ser is probably not used. Check this.
-        self.ser = None
         self.lengthOfPortNameList = 0
         self.serialPort = None
         self.strippedSerialPortNames = None
@@ -162,6 +160,7 @@ class DownLoaderForm(wx.Panel):
                 local_cmd = 'param set ' + par2[0] + par3
 
                 print '[%d] - %s' % (parIndex, local_cmd)
+                # TODO: this is commented for debug reason, should be uncomment for production
                 #pp.serial_cmd(local_cmd, self.mySer)
                 time.sleep(common.DELAY_03)
                 self.gauge.SetValue(parIndex)

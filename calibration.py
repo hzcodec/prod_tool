@@ -10,14 +10,6 @@ import poll_port as pp
 
 BORDER1 = 10
 
-# TODO: serial_cmd should be replaced by poll_port
-def serial_cmd(cmd, serial):
-    # send command to serial port
-    try:
-        serial.write(cmd + '\r');
-    except:
-        logging.info('Not connected')
-
 
 class CalibForm(wx.Panel):
 
@@ -154,7 +146,7 @@ class CalibForm(wx.Panel):
             self.txtAlignment.SetLabel("Alignment initiated")
             self.btnSaveParam.Enable(True)
             self.operation = 'alignment'
-            serial_cmd('align', self.mySer)
+            pp.serial_cmd('align', self.mySer)
 
         except:
             self.txtAlignment.SetForegroundColour(common.RED)
@@ -167,7 +159,7 @@ class CalibForm(wx.Panel):
         self.btnCalibLeft.Enable(True)
         self.txtThrottleMaxUp.SetForegroundColour(common.GREEN)
         self.txtThrottleMaxUp.SetLabel("Up Calibration finished")
-        serial_cmd('throttle cal 1', self.mySer)
+        pp.serial_cmd('throttle cal 1', self.mySer)
 
     def onCalibLeft(self, event):
         logging.info('Calibration Down done')
@@ -175,7 +167,7 @@ class CalibForm(wx.Panel):
         self.btnCalibNeutral.Enable(True)
         self.txtThrottleMaxDown.SetForegroundColour(GREEN)
         self.txtThrottleMaxDown.SetLabel("Down Calibration finished")
-        serial_cmd('throttle cal -1', self.mySer)
+        pp.serial_cmd('throttle cal -1', self.mySer)
 
     def onCalibNeutral(self, event):
         logging.info('Calibration Neutral done')
@@ -185,7 +177,7 @@ class CalibForm(wx.Panel):
         self.txtAlertUser.SetForegroundColour(common.RED)
         self.txtAlertUser.SetLabel("Remember to save calibration result")
         self.operation = 'calibration'
-        serial_cmd('throttle cal 0', self.mySer)
+        pp.serial_cmd('throttle cal 0', self.mySer)
         self.btnSaveParam.Enable(True)
 
     def onCalibRestart(self, event):
@@ -204,7 +196,7 @@ class CalibForm(wx.Panel):
         logging.info('Save configuration after calibration')
         now = datetime.datetime.now().strftime("%Y-%m-%d  %H:%M")
         self.txtAlertUser.SetLabel(' ')
-        serial_cmd('param save', self.mySer)
+        pp.serial_cmd('param save', self.mySer)
         self.txtMultiCtrl.AppendText("Parameter saved after " + self.operation + " at  " + str(now) + '\n')
 
     def aligned_finished(self, msg):

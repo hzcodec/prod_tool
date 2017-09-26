@@ -224,7 +224,7 @@ class GetTraceData(threading.Thread):
         if (targetForSpeed1Reached > 20 and targetForSpeed2Reached > 20):
             result = 'OK'
 
-        wx.CallAfter(pub.sendMessage, "dataListener", msg=listTraceData1, msg2=listTraceData2)
+        wx.CallAfter(pub.sendMessage, "TOPIC_DATA_LISTENER", msg=listTraceData1, msg2=listTraceData2)
 
 
 class TraceTestForm(wx.Panel):
@@ -247,8 +247,7 @@ class TraceTestForm(wx.Panel):
 
         pub.subscribe(self.serialListener, 'TOPIC_SERIAL_LISTENER')
         pub.subscribe(self.configListener, 'TOPIC_CONFIG_LISTENER')
-        # TODO: rename dataListener to TOPIC_...
-        pub.subscribe(self.dataListener, 'dataListener')
+        pub.subscribe(self.dataListener, 'TOPIC_DATA_LISTENER')
 
         logging.basicConfig(format="%(filename)s: %(funcName)s() - %(message)s", level=logging.INFO)
 
