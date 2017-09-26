@@ -713,6 +713,33 @@ class ProdTestForm(wx.Panel):
         self.txtCtrl_speed_lim.Disable()
         self.txtCtrl_delay_start.Disable()
 
+    def unLock_text_controls(self):
+        self.txtCtrl_cl_max.Enable()
+        self.txtCtrl_cl_min.Enable()
+        self.txtCtrl_sl_ki.Enable()
+        self.txtCtrl_sl_max.Enable()
+        self.txtCtrl_sl_min.Enable()
+        self.txtCtrl_has_switch.Enable()
+        self.txtCtrl_power_margin.Enable()
+        self.txtCtrl_power_factor.Enable()
+        self.txtCtrl_brightness_lo.Enable()
+        self.txtCtrl_brake_temp_ok.Enable()
+        self.txtCtrl_brake_temp_hi.Enable()
+        self.txtCtrl_brake_max_id.Enable()
+        self.txtCtrl_brake_pos_ratio.Enable()
+        self.txtCtrl_trajec_acc.Enable()
+        self.txtCtrl_trajec_ret.Enable()
+        self.txtCtrl_dominant_throttle_on.Enable()
+        self.txtCtrl_max_motor_temp.Enable()
+        self.txtCtrl_num_motor_ch.Enable()
+        self.txtCtrl_idle_timeout.Enable()
+        self.txtCtrl_rope_stuck_on.Enable()
+        self.txtCtrl_iq_alpha.Enable()
+        self.txtCtrl_speed_alpha.Enable()
+        self.txtCtrl_undershoot.Enable()
+        self.txtCtrl_speed_lim.Enable()
+        self.txtCtrl_delay_start.Enable()
+
     def onTestInject(self, event):
         if (self.toggle == False):
             logging.info('Inject ON')
@@ -766,6 +793,8 @@ class ProdTestForm(wx.Panel):
         time.sleep(1)
         pp.serial_cmd('speed ' + str(speedValue), self.mySer)
 
+
+
     def onTestStop(self, event):
         logging.info('')
         self.txtMultiCtrl.AppendText('Stop command ' + "\n")
@@ -781,3 +810,4 @@ class ProdTestForm(wx.Panel):
 
     def onCombo(self, event):
         print 'Selected port: '
+

@@ -117,32 +117,7 @@ class MainFrame(wx.Frame):
             passwd = dialog.GetValue()
 
             if (passwd == 'Woodpecker'):
-                # TODO: this should probably bee in prodtest.py instead
-                self.tabProdTest.txtCtrl_cl_max.Enable()
-                self.tabProdTest.txtCtrl_cl_min.Enable()
-                self.tabProdTest.txtCtrl_sl_ki.Enable()
-                self.tabProdTest.txtCtrl_sl_max.Enable()
-                self.tabProdTest.txtCtrl_sl_min.Enable()
-                self.tabProdTest.txtCtrl_has_switch.Enable()
-                self.tabProdTest.txtCtrl_power_margin.Enable()
-                self.tabProdTest.txtCtrl_power_factor.Enable()
-                self.tabProdTest.txtCtrl_brightness_lo.Enable()
-                self.tabProdTest.txtCtrl_brake_temp_ok.Enable()
-                self.tabProdTest.txtCtrl_brake_temp_hi.Enable()
-                self.tabProdTest.txtCtrl_brake_max_id.Enable()
-                self.tabProdTest.txtCtrl_brake_pos_ratio.Enable()
-                self.tabProdTest.txtCtrl_trajec_acc.Enable()
-                self.tabProdTest.txtCtrl_trajec_ret.Enable()
-                self.tabProdTest.txtCtrl_dominant_throttle_on.Enable()
-                self.tabProdTest.txtCtrl_max_motor_temp.Enable()
-                self.tabProdTest.txtCtrl_num_motor_ch.Enable()
-                self.tabProdTest.txtCtrl_idle_timeout.Enable()
-                self.tabProdTest.txtCtrl_rope_stuck_on.Enable()
-                self.tabProdTest.txtCtrl_iq_alpha.Enable()
-                self.tabProdTest.txtCtrl_speed_alpha.Enable()
-                self.tabProdTest.txtCtrl_undershoot.Enable()
-                self.tabProdTest.txtCtrl_speed_lim.Enable()
-                self.tabProdTest.txtCtrl_delay_start.Enable()
+                self.tabProdTest.unLock_text_controls()
 
     def onAbout(self, event):
         licence = """
